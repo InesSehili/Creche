@@ -24,13 +24,13 @@ from enfants.views import liste_enfants , ajouter_enfant ,afficher_detail_enfant
 from stock.views import ajouter_article ,supprimer_stock  ,valider_modifier_stock ,modifier_stock
 from besoin.views import liste_besoin ,ajouter_besoin ,supprimer_besoin ,valider_modifier_besoin ,modifier_besoin
 from achats.views import  ajouter_achats   
-from pointages.views import list_enfant_present ,list_enfant_absent ,pointage_enfant, supprimer_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_employe,supprimer_pointage,pointage_employe,  list_employe_present,list_employe_absent
+from pointages.views import imprimer_pointage_enfant, list_enfant_present ,list_enfant_absent ,pointage_enfant, supprimer_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_employe,supprimer_pointage,pointage_employe,  list_employe_present,list_employe_absent
 from depenses.views import dashboard
 
 from prixsortie.views import liste_stock,liste_depenses ,ajouter_facture_depense,valider_ajouter_depense ,ajouter_liste_achats ,ajouter_achats_article ,supprimer_achats,modifier_achats ,valider_modifier_achats,ajouter_achats_besoin ,liste_achats ,valider_modifier_depense,modifier_depense_prix
 from sectionsage.views import update_section_age, section_age_page, formulaire_modifier_section_age, delete_section_age
 
-from factureenfants.views import print_pdf, imprimer_facture, liste_factures_touts_les_enfant, update_facture_enfant, formulaire_modifier_facture_enfant, add_new_facture_enfant, liste_factures_enfant, formulaire_ajouter_facture, delete_facture
+from factureenfants.views import imprimer_facture, liste_factures_touts_les_enfant, update_facture_enfant, formulaire_modifier_facture_enfant, add_new_facture_enfant, liste_factures_enfant, formulaire_ajouter_facture, delete_facture
 
 
 from payement.views import formulaire_creation_payement , ajouter_payement ,supprimer_payement,modifier_payement ,valider_modifier_payement
@@ -41,7 +41,8 @@ urlpatterns = [
     path("", include("app.urls")),  # UI Kits Html files
     path("", include("authentication.urls")),  # Auth routes - login / register
     path('changer_mot_de_passe', changer_mot_de_passe, name="changer_mot_de_passe"),
-    path('print_pdf', print_pdf, name="print_pdf"),
+    path('imprimer_pointage_enfant', imprimer_pointage_enfant, name="imprimer_pointage_enfant"),
+   
     path('imprimer_facture_employer', imprimer_facture_employer, name="imprimer_facture_employer"),
     path('ajouter_employee', ajouter_employee, name="ajouter_employee"),
     path('update_section_age', update_section_age, name="update_section_age"),
