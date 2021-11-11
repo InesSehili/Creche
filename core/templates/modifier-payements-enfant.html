@@ -1,0 +1,117 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Payement {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+
+    <form action="{% url 'valider_modifier_payement' %}" method="POST" enctype= multipart/form-data>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Ajouter payement
+                         <span class="fas fa-cash-register text-warning"></span></h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="first_name">Nom de patient</label>
+                                    <input  class="form-control" id="first_name" type="text"
+                                    name="nom"
+                                           placeholder="{{nom}}" value="{{nom}}"
+                                           disabled>
+                                          
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="last_name">Prenom de patient</label>
+                                    <input  class="form-control" id="last_name" type="text"
+                                           placeholder="{{prenom}}" name="prenom" value="{{prenom}}"
+                                           disabled>
+                                          
+                                </div>
+                                <input type="hidden" name="enfant" value="{{enfant}}">
+                            </div>
+                        </div>
+                        <div class="row ">
+                            
+                   <div class="col-md-12 mb-3">
+                                <div class="form-group">
+                                    
+                  <label class="my-1 mr-2" for="payement_de">Payement de</label>
+                    
+         <select name="facture"  class="form-select" id="payement_de" aria-label="Default select example" disabled>
+                                        <option value="{{payement.facture}}" selected> Facture : {{payement.facture.id}} {{payement.facture.created_at}}, {{payement.facture.reste_paye}} DA </option>
+                           
+                 </select>
+                                
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="titre-radio">Prix payé</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"></span>
+                                     <input name="prix_payer" class="form-control" id="prix_payer" type="number"
+                                           placeholder="" value="{{payement.prix_payer}}"
+                                           required>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            
+                              <div class="mb-4">
+                                    <label class="my-1 mr-2" for="client">Client</label>
+                                    <select class="form-select" required name = "client" id="client" aria-label="Default select example" >
+                                        <option value ="{{payement.client}}" selected>{{payement.client}}</option>                   
+                                        <option value="mere">mere</option>
+                                        <option value="pere">pere</option>
+                                        <option value="autre">autre</option>
+                                    </select>
+                                </div>
+                               
+                        </div>
+                
+                        <div class="mt-3">
+                            <input type="hidden" name="id_payement" value="{{payement.id}}">
+                            <input type="hidden" name="enfant" value="{{enfant}}">
+                            <input type="hidden" name="prenom" value="{{prenom}}">
+                            <input type="hidden" name="nom" value="{{nom}}">                            
+                            <input type="hidden" name="facture" value="{{payement.facture.id}}">
+
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-12 col-xl-4">
+                    <div class="row">
+                        
+                        <div class="col-12">
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-info">
+                                 <span  class="fas fa-cash-register fa-10x"></span>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </form>
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

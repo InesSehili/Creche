@@ -1,0 +1,268 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Enfant {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+        <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{% url 'liste_enfants' %}"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'liste_enfants' %}">Enfant</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">modifier Enfant</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Information Enfant</h1>
+                    <p class="mb-0">Entrez toutes les informations de l'enfant</p>
+                </div>
+                <div>
+                    <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/components/forms/" class="btn btn-outline-gray"><i class="far fa-question-circle mr-1"></i> Forms Docs</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card border-light shadow-sm components-section">
+                    <div class="card-body">
+                       <form action="{% url 'valider_modifier_enfant'  %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}     
+                        <div class="row mb-4">
+                             <div class="col-lg-4 col-sm-6">
+                             <legend class="h4 text-secondary ">Information enfant</legend>
+                          <div class="mb-3">
+                            <img src="{{enfant.get_image}}" class="user-avatar large-avatar rounded-circle mx-auto  mb-4"
+                                  alt="Neil Portrait">
+                            </div>
+                               
+                            </div>
+                            <div class="col-lg-4 col-sm-6">
+                                <!-- Form -->
+                                <div class="mb-4">
+                                    <label for="nom">Nom</label>
+                                    <input type="text" class="form-control" id="nom" name="nom" placeholder="{{enfant.nom}}" value="{{enfant.nom}}" >
+                                    
+                                </div>
+                                <!-- End of Form -->
+                                <!-- Form -->
+                                <div class="mb-3">
+                                    <label for="prenom">Prenom</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name = "prenom" id="prenom" value="{{enfant.prenom}}"  placeholder="{{enfant.prenom}}" aria-label="" >
+                                    </div>
+                                </div>
+                                <!-- End of Form -->
+                                <!-- Form -->
+                                <div class="mb-3">
+                                    <label for="birthday">Date de naissance</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                        <input  class="form-control" id="birthday" type="date" name = "date_naissance" >                                               
+                                    </div>
+                                </div>
+                                <!-- End of Form -->
+                                <!-- Form -->
+                                <div class="mb-3">
+                                    <label for="age">Age</label>
+                                    <div class="input-group">
+                                        <input type="number" name="age" class="form-control" id="age" placeholder="{{enfant.age}}" value="{{enfant.age}}" aria-label="">
+                                     
+                                    </div>
+                                </div>
+                                 <div class="mb-4">
+                                    <label class="my-1 mr-2" for="classe">Classe</label>
+                                    <select class="form-select"  name = "classe" id="classe"  aria-label="Default select example">
+                                        <option selected value="{{enfant.classe.id}}">{{enfant.classe.nom_classe}} </option>
+                                        {% for classe  in list_classe %}
+                                         {% if classe.nom_classe != enfant.classe.nom_classe %}
+                                            <option value="{{classe.id}}">{{classe.nom_classe}}</option>
+                                         {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- End of Form -->
+                               
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6">
+                                 <div class="mb-4">
+                                    <label class="my-1 mr-2" for="sexe">Sexe</label>
+                                    <select class="form-select" name="sexe" id="sexe" aria-label="Default select example">
+                                        <option value="{{enfant.sexe}}" selected>{{enfant.sexe}}</option>
+                                        {% if enfant.sexe == "garçon" %}
+                                             <option value="fille">fille</option>
+                                        {%elif  enfant.sexe == "fille" %}
+                                             <option value="garçon">garçon</option>
+                                        {% endif %} 
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="nbr-freres">Nombre de freres</label>
+                                     <div class="input-group">
+                                        <input type="number" name="nombre_frere" class="form-control" id="nbr-freres" placeholder="{{enfant.nombre_frere}}" value="{{enfant.nombre_frere}}" >
+                                     
+                                    </div>
+                                    
+                                </div>
+                             <div class="mb-3">
+                                    <span class="h4 text-secondary font-weight-bold">Autorisations</span>
+                                </div>
+                            
+                                      {% for auto in list_autorisationc %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="autorisation[]" checked value="{{auto.id}}" id="defaultCheck10">
+                                                <label class="form-check-label" for="defaultCheck10">
+                                                  {{auto.nom}}
+                                                </label>
+                                            </div>
+                                    
+                                    {% endfor %}
+                                   {% for autorisation in  list_autorisation %}
+                                        <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="autorisation[]" value="{{autorisation.id}}" id="defaultCheck10">
+                                                <label class="form-check-label" for="defaultCheck10">
+                                                Autorisations  {{autorisation.nom}}
+                                                </label>
+                                        </div>
+                                   {% endfor %}
+                            </div>
+                           
+                           
+                           
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="row mb-4">
+                            <div class="col-lg-6 col-sm-6">
+                                <legend class="h4 text-secondary ">Info Parrents</legend>
+                                <div class="mb-3">
+                                         <label for="nom-pere">pere</label>
+                                    <input type="text" id="nom-pere" class="form-control" name ="pere" placeholder="{{enfant.parents.pere}}" value="{{enfant.parents.pere}}" >                                               
+                                    
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nom-mere">mere</label>
+                                    <input type="text" id="nom-mere" name="mere" class="form-control" placeholder="{{enfant.parents.mere}}" value="{{enfant.parents.mere}}" >
+                                </div>
+                                <div >
+                                    <fieldset>
+                                    {% if enfant.parents.etat == "divorce" %}
+                                    <div class="form-check">
+                                        <input class="form-check-input " type="radio" name="etat" id="exampleRadios1" value="divorce" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                          Divorcé
+                                        </label>
+                                      </div>
+                                      {% else %}
+                                        <div class="form-check">
+                                        <input class="form-check-input " type="radio" name="etat" id="exampleRadios1" value="divorce" >
+                                        <label class="form-check-label" for="exampleRadios1">
+                                          Divorcé
+                                        </label>
+                                      </div>
+                                      {% endif %}
+                                      {% if enfant.parents.etat == "orphelin" %}
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etat" id="exampleRadios2" value="orphelin" checked >
+                                        <label class="form-check-label" for="exampleRadios2">
+                                          Orphelin
+                                        </label>
+
+                                      </div>
+                                      {% else %}
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etat" id="exampleRadios2" value="orphelin" >
+                                        <label class="form-check-label" for="exampleRadios2">
+                                          Orphelin
+                                        </label>
+
+                                      </div>
+
+                                      {% endif %}
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="etat" id="exampleRadios3" value=" " >
+                                        <label class="form-check-label" for="exampleRadios3">
+                                          none
+                                        </label>
+                                        </div>
+                                      
+                                    <!-- End of Radio -->
+                                </fieldset>
+                                </div>
+                              
+                                  
+                                <!-- End of Form -->
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                 <legend class="h4 text-secondary ">Contact / Adresse</legend>
+                               
+                                  <div class="mb-3 row">
+                                     <label for="tele-pere" class="col-sm-5 col-form-label">Tél pére</label>
+                                        <div class="col-sm-7">
+                                        <input type="text"  name="telephone_pere" class="form-control" id="tele-pere" value="{{enfant.parents.telephone_pere}}" placeholder="{{enfant.parents.telephone_pere}}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                     <label for="tele-mere" class="col-sm-5 col-form-label">Tél mére</label>
+                                        <div class="col-sm-7">
+                                        <input type="text" name="telephone_mere" class="form-control" id="tele-mere" value="{{enfant.parents.telephone_mere}}" placeholder="{{enfant.parents.telephone_mere}}"> 
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                     <label for="email" class="col-sm-5 col-form-label">email</label>
+                                        <div class="col-sm-7">
+                                        <input type="email" class="form-control" name="email" id="email" value="{{enfant.parents.email}}" placeholder="{{enfant.parents.email}}" >
+                                        </div>
+                                    </div>
+                                        <div class="my-4">
+                                    <label for="address">Adresse</label>
+                                    <textarea class="form-control" placeholder="{{enfant.parents.adresse}}" value="{{enfant.parents.adresse}}" id="adresse" name ="adresse" rows="2" ></textarea>
+                                  </div>
+                                     <div class="my-4">
+                                    <label for="textarea" class="text-secondary ">Autres personnes autorisées</label>
+                                    <textarea class="form-control" placeholder="{{enfant.parents.personne_autorise}}" value="{{enfant.parents.personne_autorise}}" name="personne_autorise" id="textarea" rows="2"></textarea>
+                                  </div>
+                            
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                          <input type="hidden" value="{{enfant.id}}" name= "id_enfant">
+                          <button type="submit" class="btn btn-tertiary " aria-haspopup="true" aria-expanded="false">
+                                    Valider
+                         </button>
+                      </form>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+                  
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+   <script type="text/javascript"> 
+     document.getElementById("myButton2").onclick = function () {
+        location.href = "/ajouter-employee.html";
+    };
+
+     
+</script>
+
+{% endblock javascripts %}

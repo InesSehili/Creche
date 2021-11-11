@@ -1,0 +1,122 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Achats {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="{% url 'liste_stock' %}"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'liste_stock' %}">gestion de cuisine</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'ajouter_besoin' %}">besoin de cuisine</a></li>
+
+                  <li class="breadcrumb-item active" aria-current="page">achter</li>
+              </ol>
+          </nav>
+        
+      </div>
+       
+            <div class="row"> 
+                
+                <div class="col-12 col-xl-12">
+                <form action="{% url 'ajouter_achats_besoin' %}" method="POST">
+                   {% csrf_token %}
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"> 
+                            Ajouter  Achat
+                         <span class="fas  fas fa-shopping-cart text-twitch "></span></h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="prix">type depense</label>
+                                <select class="form-select" name ="depense"   aria-label=" select example">
+                                    
+                                    {% for depense in liste_depense %}
+                                        <option value="{{depense.nom}}">{{depense.nom}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+
+                                    <label for="prix">prix</label>
+                                    <input  class="form-control" id="prix" type="number" placeholder="--" name="prix" >      
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                            <label for="prix">date d'achat</label>
+                            <div class="input-group">
+                                        <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                        <input  class="form-control" id="birthday" type="date" name = "date" placeholder="dd/mm/yyyy" required>                                               
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <input type="hidden" name="besoin_id" value ="{{besoin_id}}">
+                            <input type="hidden" name = "article" value ="{{besoin_article}}">
+                            
+                            <button type="submit" class="btn btn-sm btn-outline-tertiary " >Sauvgarder</button>
+                        </div>
+                    </div>
+                       </form>
+                </div>
+              
+            </div>
+        
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+<script type="text/javascript"> 
+     
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[0];
+            let td1 = tr[i].getElementsByTagName('td')[1];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+                let textvalue2 = td1.textContent || td1.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 )
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+    }
+    document.getElementById("myButton4").onclick = function () {
+        location.href = "/ajouter-paiement-employes.html";
+    };
+</script>
+
+
+{% endblock javascripts %}

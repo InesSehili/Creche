@@ -1,0 +1,121 @@
+
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Employee {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+         <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{% url 'liste_employe' %}"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'liste_employe' %}">liste employee</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ajouter employee</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Informations employées</h1>
+                
+                </div>
+            </div>
+        </div>
+   
+
+        <form action="{% url 'ajouter_employee' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"></h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div>
+                                    <label for="raison_social">Nom</label>
+                                    <input name="nom" class="form-control" id="raison_social" type="text"placeholder="Nom" value=""
+                                           required>
+                                </div>
+                            </div>
+                             <div class="col-md-4 mb-3">
+                                <div>
+                                    <label for="raison_social">Prenom</label>
+                                    <input name="prenom" class="form-control" id="raison_social" type="text"
+                                           placeholder="Prenom" value=""
+                                           required>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="email">email</label>
+                                    <input name="email" class="form-control" id="email" type="email"
+                                           placeholder="example@gmail.com" value="" >
+                                </div>
+                          
+                        </div>
+
+                        <div class="row align-items-center">         
+                              <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="phone">Numero téléphone</label>
+                                    <input name="telephone" class="form-control" id="phone" type="number"
+                                           placeholder="+213-345 678 910" value="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="address">Address</label> 
+                                    <input name="address" class="form-control" id="address" type="text"
+                                           placeholder="" value=""  required>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row align-items-center"> 
+                        <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="fonction">Fonction</label>
+                                    <select name="fonction" class="form-select mb-0" id="fonction" required
+                                            aria-label="Gender select example">
+                                        <option value ="" >selction fonction</option>
+                                        <option value="educatrice"> educatrice</option> 
+                                        <option value="educatrice"> educatrice</option> 
+                                        <option value="educatrice"> educatrice</option> 
+                                       </select>    
+                                </div>
+                            </div>
+                        <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="nif">salaire</label>
+                                    <input name="salaire" class="form-control" id="nif" type="number"
+                                           placeholder="prix" value="0" required>
+                                </div>
+                            </div>
+                             
+                        </div>
+
+                        </div>
+                       
+                        
+                        <div class=" mb-3 mt-5">
+                            <button type="submit" class="btn btn-secondary">Sauvgarder</button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </form>
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

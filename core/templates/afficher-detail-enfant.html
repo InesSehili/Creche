@@ -1,0 +1,208 @@
+  {% extends "layouts/base.html" %}
+
+{% block title %} Détail enfant {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+    <div class="row">
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="{% url 'liste_enfants' %}"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'liste_enfants' %}">Enfants</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Afficher details</li>
+              </ol>
+          </nav>
+          <div class="d-flex justify-content-between w-100 flex-wrap">
+              <div class="mb-3 mb-lg-0">
+                  <h1 class="h4">Details Enfant</h1>
+                  <p class="mb-0">Vous trouvez ici touts les details de enfant</p>
+                 
+              </div>
+              
+          </div>
+      </div>
+    </div>  
+
+    <div class="row">
+          <div class="">
+              <div class="card border-light shadow-sm components-section">
+                  <div class="card-body">     
+                     
+                      <!-- Title  -->
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="mb-5">
+                                  <h2 class="h5 text-secondary mb-3">Informations Enfants: </h2>
+                                  <div class="col-md-6">
+                                        <div class="mb-3">
+                                        <img src="{{ image }}" class="user-avatar large-avatar rounded-circle mx-auto  mb-4"
+                                        alt="Neil Portrait">
+                                        </div>
+                                        <div class="mb-3">
+                                            <span class="h6 font-weight-bold">Date de création :</span>
+                                        </div>
+                                        <p class="lead text-info">{{enfant.created_at}}</p>
+                                    
+                                        <div class="mb-3">
+                                        <span class="h6 font-weight-bold">Nom et prenom : </span>
+                                        </div>
+                                        <p class="lead text-info ">{{nom}} {{prenom}}</p>
+                             
+                                  </div>
+                               </div>
+                            </div>   
+                            <div class="col-md-6">
+                                  <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Date de naissance :</span>
+                                  </div>
+                                  <p class="lead text-info "> {{date_naissance}} </p>
+                                  
+
+                                  <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Sexe : </span>
+                                  </div>
+                                  <p class="lead text-info ">{{sexe}}</p>
+                                
+                                  
+                                  <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Age :</span>
+                                  </div>
+                                  <p class="lead text-info "> {{age}}</p>
+                             
+                                 
+                                 
+                                  
+                                 
+                            </div>
+                      </div>
+                       <hr>
+                        <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                                <div class="mb-3">
+                                    <h2 class="h5 text-secondary mb-3">Informations parents: </h2>
+                                </div>
+                             
+                            
+                                 <div class="mb-3">
+                                  <span class="h6 font-weight-bold">pere : </span>
+                                 </div>
+                                 <p class="lead text-info ">{{pere}}</p>
+                                
+                                 <div class="mb-3">
+                                  <span class="h6 font-weight-bold">mere :</span>
+                                 </div>
+                                 <p class="lead text-info ">{{mere}}</p>
+                                 
+                                 <div class="mb-3">
+                                  <span class="h6 font-weight-bold">l'etat : </span>
+                                 </div>
+                                 <p class="lead text-info ">{{etat}}</p>
+                                 
+                                 <div class="mb-3">
+                                  <span class="h6 font-weight-bold">personnes autorisée : </span>
+                                 </div>
+                                 <p class="lead text-info ">{{personne_autorise}}</p>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">Adresse / Contact</span>
+                              </div>
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold"> adresse : </span>
+                              </div>
+                              <p class="lead text-info">{{adresse}}</p>
+                              
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold"> email : </span>
+                              </div>
+                              <p class="lead text-info">{{email}}</p>
+
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">N° de télephone mere : </span>
+                              </div>
+                              <p class="lead text-info">{{telephone_mere}}</p>
+
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">N° de télephone pere: </span>
+                              </div>
+                              <p class="lead text-info">{{telephone_pere}}</p>
+
+                        </div>  
+                      </div> 
+                      <hr>
+                        <div class="row mb-4 mb-lg-5">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                 <h2 class="h5 text-secondary mb-3">Autre Informations  </h2>
+                              </div>
+                            
+                          
+                               
+                               
+                                
+                                 <div class="mb-3">
+                                  <span class="h6 font-weight-bold">classe : </span>
+                                 </div>
+                                 <p class="lead text-info ">{{classe}}</p>
+                                 
+                                  <div class="mb-3">
+                                  <span class="h6 font-weight-bold">Autorisations :</span>
+                                  </div>
+                                    {% for auto in list_autorisation %}
+                                        <p class="lead text-info ">
+                                            {{auto.nom}}  
+                                        </p>
+                                    {% endfor %}
+                                  
+                        
+                         </div>
+                          <div class="col-md-6">
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold text-secondary">information du payement</span>
+                              </div>
+                              <p class="lead text-info"> </p>
+                              <br>
+                              
+                              <div class="mt-5 mb-3 mt-sm-0">
+                                  <span class="h6 font-weight-bold">prix à payer:</span>
+                              </div>
+                              <p class="lead text-info"> {{prix_paye}}</p>
+
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold">reste à payer : </span>
+                              </div>
+                              <p class="lead text-info">{{reste_paye}}
+                              </p>
+
+                              <div class="mb-3">
+                                  <span class="h6 font-weight-bold"> total de payement: </span>
+                              </div>
+                              <p class="lead text-info">{{total_payement}}
+                              </p>
+  
+                        </div>
+                     </div> 
+                  </div>
+              </div>
+          </div>
+          
+           
+      </div>
+
+
+      {% include 'includes/footer.html' %}
+
+    </main>
+                                    
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

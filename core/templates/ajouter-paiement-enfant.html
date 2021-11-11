@@ -1,0 +1,149 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ajouter payement {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+    
+        <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{% url 'liste_factures' %}"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'liste_factures' %}">Paiements</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">paiement Enfant Mensuelle</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Ajouter Paiement Mensuelle</h1>
+                    
+                </div>
+            </div>
+        </div>
+
+      <div class="card border-light shadow-sm mb-4">
+          <div class="card-body">
+              
+        <form action="{% url 'valider_paiement_mensuelle' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 ">
+                   
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                                <label for="enfant"> Selction enfant </label>
+                                <select name="enfant" class="form-select mb-0" id="enfant"
+                                        aria-label="Gender select example" required>
+                                    <option value ="">select enfant</option>
+                                    {%for enfant in list_enfants%}
+                                    <option value="{{enfant.id}}">{{enfant.nom}} {{enfant.prenom}}</option>
+                                    {% endfor %}   
+                                </select>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <div>
+                                   <label for="client">Client</label>
+                                    <input name="client" class="form-control" id="client" type="text"
+                                           placeholder="mere / pere" value ="{{form.client.value|default:'mere / pere'}}" >
+                                </div>          
+                           </div>  
+                          
+                              
+                        </div>
+                        <div class="row">
+                           <div class="col-md-6 mb-3">
+                               <label for="mois">mois</label>
+                                <select name="mois" class="form-select mb-0" id="mois"
+                                        aria-label="Gender select example">
+                                     <option value="janvier">janvier</option>  
+                                    <option value="février">février</option>  
+                                    <option value="mars">mars</option>    
+                                    <option value="avril">avril</option>  
+                                    <option value="mai"> mai</option>  
+                                    <option value="juin">juin</option>  
+                                    <option value="juillet">juillet</option>  
+                                    <option value="août">août</option>  
+                                    <option value="septembre">Septembre</option> 
+                                    <option value="octobre">Octobre</option>  
+                                    <option value="novembre">Novembre</option>  
+                                    <option value="décembre">Décembre</option>   
+                                </select>        
+                           </div>  
+                             <div class="col-md-6 mb-3">
+                                <div>
+                                   <label for="tarif">Frais inscription</label>
+                                    <input name="tarif" class="form-control" id="tarif" type="number"
+                                           placeholder="prix" min="0" value ={{form.tarif.value|default:0}} required>
+                                </div>          
+                           </div>      
+                        </div>  
+                          
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                 <label class="my-1 mr-2" for="categories">Catégories Abonnement</label>
+                                    <select class="form-select" id="categories"  name='categorie' aria-label="Default select example" required>
+                                        <option value ="" >select categories </option>
+                                        {% for categories  in list_categories %}
+                                        <option value="{{categories.id}}">{{categories.nom}} , prix :{{categories.prix}}</option>
+                                        {% endfor %}
+                                    </select>
+
+                            </div>
+                          <div class="col-md-6 mb-3">
+                             
+                                    <label for="montant_payer">montant a payer</label>
+                                     <div class="input-group">
+                                        <input type="number" name="prix_paye" min="0" value={{form.nom.value|default:0}} class="form-control" id="montant_payer" placeholder="0000 DA" aria-label="" required>
+                                     
+                                    </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                           <div class="col-md-4 mb-3">
+                              <label >liste de supplement</label>
+                            {% for supplement  in list_supplement %}
+                                    <div class="form-check required" >
+                                        <input class="form-check-input" type="checkbox" name="suplement[]" value="{{supplement.id}}" id="suplement">
+                                        <label class="form-check-label" for="suplement">
+                                         {{supplement.nom_supplement}} , prix : {{supplement.prix}} DA
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                             </div>
+                                     
+                        </div>      
+                        <div class="mt-3">
+                            <input type="hidden" name="facture" value="{{facture.id}}">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button><br>
+                            <label> {% if rest_paye %}total du reste{{rest_paye}}{% endif %}</label><br>
+                            
+                            <label> {% if prix_paye %}Total de prix payer :{{prix_paye}}{% endif %}</label><br>
+                            <label>{% if total_payement %}totale de payement : {{total_payement}}{% endif %}</label>
+     
+                        </div>
+                   
+                </div>
+              
+            </div>
+        </form>
+              
+          </div>
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+{% endblock javascripts %}

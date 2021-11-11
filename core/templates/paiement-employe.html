@@ -1,0 +1,198 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Facture</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Listes facture de tous les employes</li>
+                        </ol>
+                    </nav>
+                     
+                </div>
+                    
+              
+
+            </div>
+        {% if employe %}
+             <div class="card border-light shadow-sm mb-4">
+          <div class="card-body">
+              
+        <form action="{% url 'ajouter_paiement_employe' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row ">
+                <div class="col-12 ">
+                   
+                        <h2 class="h5 mb-4">Formulaire de nouveaux Paiements <span class="fas fa-comments-dollar"></span> :</h2>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                                <label for="enfant">employee </label>
+                                <select name="employe" class="form-select mb-0" id="enfant"
+                                        aria-label="Gender select example" required>
+                                    <option value="{{employe.id}}" selected>{{employe.nom}} {{employe.prenom}}</option>
+                                     
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                   <label for="tarif">Tarif </label>
+                                    <input name="tarif" class="form-control" id="tarif" type="number"
+                                           placeholder="Entrer Salaire" min="0" value="{{employe.salaire}}"  required>
+                                </div>          
+                           </div>
+                    
+                        </div>
+                        <div class="row">  
+                           <div class="col-md-6 mb-3">
+                               <label for="datet">Date</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                        <input class="form-control" id="date" type="date"  name ="date" required>                                               
+                                    </div>     
+                           </div>       
+                        </div>           
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button> 
+                        </div>
+                </div> 
+            </div>
+        </form>      
+        </div>
+        </div>
+        {% endif %}
+        <div class="d-block">
+                          <div class="h5 font-weight-normal mb-2 text-muted "> entrez vos mot de recherche dans la barre de rechereche :   </div>   
+        </div>
+       <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-8">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+         <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 30rem;">
+
+                  <table class="table table-hover" id="myTable">
+                      <thead >
+                          <tr>
+                              <th >A partir de</th>
+                              <th >Mois</th>
+                              <th >Client</th>
+                               <th>Tarif</th>
+                               <th >Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <!-- Item -->
+                          {% for facture in list_factures %}
+                          <tr>
+                              <td >{{facture.date}}</td>
+                              <td >{{facture.date|date:"M"}}</td>
+                              <td class="text-info" >{{facture.employe.nom }}</td>
+                             {% if facture.employe.nom  %}
+                              <td class="text-danger"> <span class="fas fa-angle-down"></span> {{facture.tarif}}</td>
+                              {% endif %}
+                              <td>
+                                 <div class="btn-group">
+                                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                         <span class="icon icon-sm">
+                                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                         </span>
+                                         <span class="sr-only">Toggle Dropdown</span>
+                                      </button>
+                                     <div class="dropdown-menu">
+                                                    
+                                      
+                                  <form action="{% url 'modifier_facture' %}" method="POST">
+                                    {% csrf_token %}
+            <input type="hidden" name="facture" value="{{facture.id}}">
+                                <button class="dropdown-item text-info" type="submit" ><span class="fas fa-edit mr-2"></span>modifier</button>
+                                 </form> 
+                  <form action="{% url 'imprimer_facture_employer' %}" method="POST">
+                    {% csrf_token %}
+                                                   
+               <input type="hidden" name="facture" value="{{facture.id}}">
+                <input type="hidden" name="date" value="{{facture.created_at}}">
+              <input type="hidden" name="employe" value="{{facture.employe.id}}">
+                                                    <button class="dropdown-item " type="submit" ><span class="fas fa-print text-muted"></span>Imprimer</button>
+                                                    </form>
+                                                    <form action="{% url 'supprimer_facture' %}" method="POST">
+                                            {% csrf_token %}
+                                             <input type="hidden" name="facture" value="{{facture.id}}">
+                                             <input type="hidden" name="tarif" value="{{facture.tarif}}">
+                                             <button class="dropdown-item text-danger" type="submit" ><span class="fas fa-trash-alt"></span>supprimer</button>
+                                        </form> 
+                                     </div>
+                                 </div>
+                               </td>
+                          </tr>
+                          {% endfor %}
+                        
+                      </tbody>
+                  </table>
+          </div>
+  
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+<script type="text/javascript"> 
+     
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[1];
+            let td1 = tr[i].getElementsByTagName('td')[2];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+                let textvalue2 = td1.textContent || td1.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 )
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+    }
+    document.getElementById("myButton4").onclick = function () {
+        location.href = "/ajouter-paiement-employes.html";
+    };
+</script>
+
+
+{% endblock javascripts %}

@@ -1,0 +1,197 @@
+    {% extends "layouts/base.html" %}
+
+{% block title %} Enfant {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Enfant</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Liste des enfant</li>
+                        </ol>
+                    </nav>
+                     <div class="d-block">
+                 <div class="h5 font-weight-normal mb-2 text-muted text-secondary">Pour plus d'information cliquer sur la rubrique action :  </div>
+                          
+                          
+                        </div>
+                  
+
+                    
+                </div>
+              
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-8">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                          <form action="{% url 'ajouter_enfant' %}" method="POST">
+                            {% csrf_token %}
+
+                                <button id=""  type="submit" class="btn btn-secondary mr-2 dropdown-toggle" 
+
+
+                                aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-plus mr-2"></span>New
+                                </button>
+                          </form>      
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 30rem;">
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th> <span class="h6 font-weight-bold">photos</span></th>
+                            <th></th>
+                            <th> <span class="font-weight-bold">Nom</span></th>                       
+                            <th> <span class="font-weight-bold">Prenom</span></th>
+                            <th> <span class="font-weight-bold">Date naissance</span></th>
+                            <th> <span class="font-weight-bold">Prix total</span></th>
+                            <th> <span class="font-weight-bold">Prix payé</span></th>
+                            <th> <span class="font-weight-bold">Reste</span></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for enfant in list_Enfants %}
+                        <tr>
+                            <td><img src="{{ enfant.get_image }}" class="user-avatar  rounded-circle"
+                                         alt="image enfant"><td>
+                            <td>
+                                <span class="font-weight-bold text-info">{{enfant.nom}}</span>
+                            </td>
+                            <td><span class="font-weight-bold text-info ">{{enfant.prenom}}</span></td>                        
+                            <td><span class="font-weight-bold text-info " >{{enfant.date_naissance}}</span></td>
+                             <td><span class="font-weight-bold text-info " >{{enfant.total_payement}}</span></td>
+                            <td><span class="font-weight-bold text-success " >{{enfant.prix_paye}}</span></td>
+                            <td><span class="font-weight-bold text-danger" >{{enfant.reste_paye}}</span></td>
+
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <form  action="{% url 'afficher_detail_enfant'%}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{enfant.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-eye mr-2"></span>Afficher Details</button>
+                                        
+                                        </form>                          
+                                         <form  action="{% url 'modifier_enfant' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{enfant.id}}">
+                                        <button class="dropdown-item text-primary" type="submit"><span class="fas fa-edit mr-2"></span>modifier</button>
+                                        
+                                        </form>
+                                              <form action="{% url 'pointage_enfant' %}" method="POST">
+                                                        {% csrf_token %}
+                                                            <input type="hidden" name="enfant" value="{{enfant.id}}">
+                                                            <button class="dropdown-item text-success " type="submit" ><span class="fas fa-hand-pointer"></span>Liste poitage</button>
+                                                        </form> 
+
+                                         <form  action="liste_factures_enfant" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="enfant" value="{{enfant.id}}">
+                                            <button class="dropdown-item text-info" type="submit"><span class="fas fa-file-invoice-dollar mr-2"></span>Factures</button>
+                                                
+                                        </form>
+                                         <form  action="{% url 'supprimer_enfant' %}" method="POST">
+                                            {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{enfant.id}}">
+                                                <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt mr-2"></span>supprimer</button>  
+                                        </form>
+                                        <form  action="{% url 'formulaire_creation_payement' %}" method="POST">
+                                            {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{enfant.id}}">
+                                                <input type="hidden" name="nom" value="{{enfant.nom}}">
+                                                <input type="hidden" name="prenom" value="{{enfant.prenom}}">
+                                                <button class="dropdown-item text-primary" type="submit"><span class="fas fa-cash-register mr-2"></span> 
+                                Payment</button>  
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <!-- Item -->                            
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+
+<script type="text/javascript">
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[0];
+            let td1 = tr[i].getElementsByTagName('td')[1];
+            if(td || td1){
+                let textvalue = td.textContent || td.innerHTML;
+                let textvalue2 = td1.textContent || td1.innerHTML;
+                if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 )
+                {
+                       tr[i].style.display = "";
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+           
+
+        }
+
+    }
+document.getElementById("myButton").onclick = function () {
+        location.href = "/ajouter-enfant.html";
+    };
+</script>
+
+{% endblock javascripts %}

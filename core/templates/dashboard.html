@@ -1,0 +1,605 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tableau de bord {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+      <!--   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+            <div class="btn-toolbar dropdown">
+                <button class="btn btn-primary btn-sm mr-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-plus mr-2"></span>New Task
+                </button>
+                <div class="dropdown-menu dashboard-dropdown dropdown-menu-left mt-2">
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-tasks"></span>New Task</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-cloud-upload-alt"></span>Upload Files</a>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-user-shield"></span>Preview Security</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-rocket text-danger"></span>Upgrade to Pro</a>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-primary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-primary">Export</button>
+            </div>
+        </div> -->
+        <div class="row justify-content-md-center">
+<!--             <div class="col-12 mb-4">
+                <div class="card bg-yellow-alt shadow-sm">
+                    <div class="card-header d-flex flex-row align-items-center flex-0">
+                        <div class="d-block">
+                            <div class="h5 font-weight-normal mb-2">Sales Value</div>
+                            <h2 class="h3">$10,567</h2>
+                            <div class="small mt-2"> 
+                                <span class="font-weight-bold mr-2">Yesterday</span>                              
+                                <span class="fas fa-angle-up text-success"></span>                                   
+                                <span class="text-success font-weight-bold">10.57%</span>
+                            </div>
+                        </div>
+                        <div class="d-flex ml-auto">
+                            <a href="#" class="btn btn-secondary text-dark btn-sm mr-2">Month</a>
+                            <a href="#" class="btn btn-primary btn-sm mr-3">Week</a>
+                        </div>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="ct-chart-sales-value ct-double-octave ct-series-g"></div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon icon-shape icon-md icon-shape-blue rounded mr-4 mr-sm-0"><span class="fas fa-child"></span></div>
+                                <div class="d-sm-none">
+                                    <h2 class="h5">Enfant</h2>
+                                    <h3 class="mb-1">{{list_enfant}}</h3>
+                                </div>
+                            </div>
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <div class="d-none d-sm-block">
+                                    <h2 class="h5">Enfant</h2>
+                                    <h3 class="mb-1">{{list_enfant}}</h3>
+                                </div>
+                                <small>Date du dernier enfant inscrit: </small> 
+                                <div class="small mt-2">                               
+                                    <span class="fas fa-angle-up text-success"></span>                                   
+                                    <span class="text-success font-weight-bold">{{date_du_dernier_enfant_ajouter}}</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon icon-shape icon-md icon-shape-secondary rounded mr-4"><span class="fas fa-cash-register"></span></div>
+                                <div class="d-sm-none">
+                                    <h2 class="h5">Revenue</h2>
+                                    <h3 class="mb-1">$43,594</h3>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <div class="d-none d-sm-block">
+                                    <h2 class="h5">Revenue</h2>
+                                    <h3 class="mb-1">{{revenu_total}}  DZD</h3>
+                                </div>
+                                    <div class="small mt-2">                              
+
+                                     {% if date_debut and date_fin %}
+                                     <span class="text-success font-weight-bold">{{revenu_entre}} DZD</span> 
+                                <small> De {{date_debut}} jusqu'à {{date_fin}}  </small>
+                                {% endif %}
+                                </div> 
+
+                  
+                            </div>
+
+
+                     <br>
+
+
+
+                                  <div class="col-12 col-xl-12 px-xl-0">
+
+                    <form action="" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+             
+                    
+                      
+                       
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-3">
+                              
+                                <div class="input-group">
+                                    <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                    <input name="date_debut" class="form-control" id="birthday"
+                                          type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                               
+                                <div class="input-group">
+                                    <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                    <input name="date_fin"  class="form-control" id="birthday"
+                                           type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <input type="hidden" name="voir" value="revenue">
+                      
+                       
+                        <div >
+                            <button type="submit" class="btn btn-warning ">Voir revenue</button>
+                        </div>
+                    
+                
+              
+            </div>
+        </form>
+        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                                                     <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                         <div class="icon icon-shape icon-md icon-shape-twitch rounded mr-4"><span class="fas fa-comments-dollar"></span></div>
+                         <div class="d-sm-none">
+                         <h2 class="h5">Dépenses</h2>
+                         <h3 class="mb-1"> {{revenu_total}} DZD</h3>
+                         </div>
+                        </div>
+                         <div class="col-12 col-xl-7 px-xl-0">
+                 <div class="d-none d-sm-block">
+                     <h2 class="h5">Dépenses</h2>
+                               
+                    <h3 class="mb-1">{{depense_total}}  DZD</h3>
+                                   
+                                    
+                                      
+                                    
+                 </div>
+             <div class="small mt-2">                              
+
+             {% if date_debut_depense and date_fin_depense %}
+             <span class="text-success font-weight-bold">{{depense_entre}} DZD</span> 
+             <small> De {{date_debut_depense}} jusqu'à {{date_fin_depense}}  </small>
+                                {% endif %}
+                 </div> 
+
+                               
+
+             </div>
+             <br>
+                          <div class="col-12 col-xl-12 px-xl-0">
+
+         <form action="" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+             
+                    
+                      
+                       
+           <div class="row align-items-center">
+             <div class="col-md-6 mb-3">
+                              
+              <div class="input-group">
+                 <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+             <input name="date_debut_depense"  class="form-control" id="birthday"
+                                           type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                 <div class="col-md-6 mb-3">
+                               
+             <div class="input-group">
+                  <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                  <input name="date_fin_depense"  class="form-control" id="birthday"
+                                          type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                           
+                        </div>
+                  <input type="hidden" name="voir" value="depense">
+                      
+                       
+                   <div >
+               <button type="submit" class="btn btn-twitch ">Voir dépense</button>
+                        </div>
+                    
+                
+              
+            </div>
+        </form>
+        </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl-8 mb-4">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                    <h2 class="h5">Listes des besoins</h2>
+                                    </div>
+                                    <div class="col text-right">
+                                        <a href="{% url 'liste_besoin' %}" class="btn btn-sm btn-secondary">Voir tous</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">La date de besoin</th>
+                                        <th scope="col">Article</th>
+                                        <th scope="col">Note</th>
+                                        <th scope="col">Date de creation</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for b in list_besoins %}
+                                    <tr>
+                                        
+                                        <td class="text-danger">
+                                            {{b.date}}
+                                        </td>
+                                        <td>
+                                            {{b.note}}
+                                        </td>
+                                        <td>
+                                           {{b.article}}
+                                        </td>
+                                        <td>
+                                            {{b.created_at}}
+                                        </td>
+                                    </tr>
+                                 {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-header border-bottom border-light">
+                                <h2 class="h5 mb-0">Alerte salaire employés</h2>
+                                <a href="#"><span class="icon icon-sm">
+                        <span class="fas fa-bell bell-shake"></span>
+                       
+                      </span></a>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush list my--3">
+                                    {% for e in list_employe_alerte_salaire_diff3 %}
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                     
+                                        <div class="col-auto ml--2">
+                                            <h4 class="h6 mb-0">
+                                                <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                            </h4>
+                                            <span class="text-success">●</span>
+                                            <small>Il reste 3 jours</small>
+                                        </div>
+                                        <div class="col text-right">
+                                            <span class="fas fas fa-users mr-1" ></span>  
+                                        </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                    {% for e in list_employe_alerte_salaire_diff2 %}
+                                    <li class="list-group-item px-0"> 
+                                        <div class="row align-items-center">
+                                          
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-warning">●</span>
+                                                <small> Il reste 2 jours</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-users mr-1" ></span>  
+                                        </div>
+                                           
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                      {% for e in list_employe_alerte_salaire_diff1 %}
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                          
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-warning">●</span>
+                                                <small>Il reste un seul jour</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-users mr-1" ></span>  
+                                        </div>
+                                        
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                     {% for e in list_employe_alerte_salaire_diff %}
+
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                            
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-danger">●</span>
+                                                <small>C'est aujourd'hui</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-users mr-1" ></span>  
+                                        </div>
+                                            
+                                        </div>
+                                    </li>
+                                     {% endfor %}
+                                      {% for e in list_employe_alerte_salaire_diff31 %}
+
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                            
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-danger">●</span>
+                                                <small>c'etait hier !</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-users mr-1" ></span>  
+                                        </div>
+                                            
+                                        </div>
+                                    </li>
+                                     {% endfor %}
+
+                                 
+                                    
+                                </ul>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-header border-bottom border-light">
+                                <h2 class="h5 mb-0">Alerte payement enfant</h2>
+                                <a href="#"><span class="icon icon-sm">
+                        <span class="fas fa-bell bell-shake"></span>
+                       
+                      </span></a>
+                            </div>
+                            <div class="card-body">
+                               <ul class="list-group list-group-flush list my--3">
+                                    {% for e in list_enfant_alerte_paiement_diff3 %}
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                     
+                                        <div class="col-auto ml--2">
+                                            <h4 class="h6 mb-0">
+                                                <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                            </h4>
+                                            <span class="text-success">●</span>
+                                            <small>Il reste 3 jours</small>
+                                        </div>
+                                        <div class="col text-right">
+                                            <span class="fas fas fa-child mr-1" ></span>  
+                                        </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                    {% for e in list_enfant_alerte_paiement_diff2 %}
+                                    <li class="list-group-item px-0"> 
+                                        <div class="row align-items-center">
+                                          
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-warning">●</span>
+                                                <small> Il reste 2 jours</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-child mr-1" ></span>  
+                                        </div>
+                                           
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                      {% for e in list_enfant_alerte_paiement_diff1 %}
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                          
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-warning">●</span>
+                                                <small>Il reste un seul jour</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-child mr-1" ></span>  
+                                        </div>
+                                        
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                     {% for e in list_enfant_alerte_paiement_diff %}
+
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                            
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-danger">●</span>
+                                                <small>C'est aujourd'hui</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-child mr-1" ></span>  
+                                        </div>
+                                            
+                                        </div>
+                                    </li>
+                                     {% endfor %}
+                                      {% for e in list_enfant_alerte_paiement_diff31 %}
+
+                                    <li class="list-group-item px-0">
+                                        <div class="row align-items-center">
+                                            
+                                            <div class="col-auto ml--2">
+                                                <h4 class="h6 mb-0">
+                                                    <a href="#">{{e.nom}} {{e.prenom}}</a>
+                                                </h4>
+                                                <span class="text-danger">●</span>
+                                                <small>c'etait hier !</small>
+                                            </div>
+                                             <div class="col text-right">
+                                            <span class="fas fas fa-child mr-1" ></span>  
+                                        </div>
+                                            
+                                        </div>
+                                    </li>
+                                     {% endfor %}
+
+                                 
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="col-12 col-xl-4 mb-4">
+                      <div class="col-12 px-0 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <h2 class="h5">liste de presencce</h2>
+                            <p>Cette liste vous montre le nombre des personnes presentes et absentes dans la créche.</p>
+                            <div class="d-block">
+                                <div class="d-flex align-items-center pt-3 mr-5">
+                                    <div class="icon icon-shape icon-sm icon-shape-success rounded mr-3"><span class="fas fa-child"></span></div>
+                                    <div class="d-block">
+                                        <label class="mb-0">Enfants presents  &nbsp;  &nbsp; &nbsp;  </label>
+                                        <h4 class="mb-0">{{nbr_presnet_enfant}}</h4>
+                                    </div>
+
+                                     <div class="icon icon-shape icon-sm icon-shape-danger rounded mr-3"><span class="fas fa-child"></span></div>
+                                    <div class="d-block">
+                                        <label class="mb-0">Enfants absents</label>
+                                        <h4 class="mb-0">{{nbr_absent_enfant}}</h4>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center pt-3">
+                             <div class="icon icon-shape icon-sm icon-shape-success rounded mr-3"><span class="fas fa-users"></span></div>
+                                    <div class="d-block">
+                                        <label class="mb-0">Employés presents &nbsp; </label>
+                                        <h4 class="mb-0">{{nbr_presnet_employe}}</h4>
+                                    </div>
+                              <div class="icon icon-shape icon-sm icon-shape-danger rounded mr-3"><span class="fas fa-users"></span></div>
+                                    <div class="d-block">
+                                        <label class="mb-0">Employés absents</label>
+                                        <h4 class="mb-0">{{nbr_absent_employe}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 px-0 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-3">
+                                <div>
+                                    <h6 class="mb-0"><span class="icon icon-xs mr-3"><span class="fas fa-coins"></span></span>Total reste</h6>
+                                </div>
+                              
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between border-bottom border-light py-3">
+                                <div>
+                         <h6 class="mb-0"><span class="icon icon-xs mr-3"><span class="fas fa-folder-open"></span></span>Enfants</h6>
+                                    <div class="small card-stats">Reste total payement enfants<span class="icon icon-xs text-success ml-2"><span class="fas fa-angle-up"></span></span></div>
+                                </div>
+                                <div>
+                                    <a href="#" class="text-primary font-weight-bold">{{reste_total_enfant}} DZD<span class="fas fa-chart-line ml-2"></span></a>
+                                </div>
+                            </div>
+                       
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

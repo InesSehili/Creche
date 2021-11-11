@@ -1,0 +1,112 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Catégorie {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+    
+
+    <form action="{% url 'update_categori_abonnement' %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"> 
+                        Modifier catégorie abonnement
+                            
+                         <span class="fas  fas fa-bus-alt text-twitch "></span></h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="first_name">Nom catégorie</label>
+                  <input  class="form-control" id="first_name" type="text"
+                     name="nom"
+                                           placeholder="Entrez le nom du categorie" value="{{categorie.nom}}" >
+                                          
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    
+                  <label class="my-1 mr-2" for="payement_de">Section d'age</label>
+                    
+         <select name="section_age" class="form-select" id="payement_de" aria-label="Default select example" required>
+                                        <option value="{{categorie.section_age.id}}"  >De {{categorie.section_age.section_age1}} à {{categorie.section_age.section_age2}} ans</option>
+                         {% for section in list_section_age %}
+                            <option value="{{section.id}}">De {{section.section_age1}} à {{section.section_age2}} ans</option>
+                            {% endfor %}
+                        
+                       </select>
+                                
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class = "row">
+                            <div class="form-group">
+                                    <label for="last_name">Prix catégorie</label>
+                                    <input  class="form-control" id="last_name" type="number"
+                                           placeholder="Prix supplement" name="prix" value="{{categorie.prix}}"
+                                           >
+                                          
+                                </div>
+                            
+                        </div>
+                        <div class="row ">
+                            
+                   <div class="col-md-12 mb-3">
+                              <div class="form-group">
+                                    <label for="desc_supplement"> Description catégorie</label>
+                                    <textarea name="description" class="form-control" id="desc_supplement" type="textarea"
+        placeholder="Description" value="{{categorie.description |default:'nothing'}} "> {{categorie.description|default:'nothing'}}</textarea>
+                                </div>
+                            </div>
+                           
+
+
+                        </div>
+                          <input type="hidden" name="id" value=" {{categorie.id}}">
+                        
+                         
+                    
+                        <div class="mt-3">
+                         
+                        <button type="submit" class="btn btn-twitch">Modifier</button>
+                           
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-12 col-xl-4">
+                    <div class="row">
+                      
+                        <div class="col-12">
+                         
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-twitch ">
+
+                                 <span  class="fas  fas fa-bus-alt fa-10x"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </form>
+
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

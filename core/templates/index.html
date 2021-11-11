@@ -1,0 +1,314 @@
+<!--
+
+=========================================================
+* Volt - Bootstrap 5 Admin Dashboard
+=========================================================
+
+* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
+* Copyright 2020 Themesberg (https://www.themesberg.com)
+
+* Designed and coded by https://themesberg.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal.
+
+-->
+<!DOCTYPE html>
+<html lang="en ">
+
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Primary Meta Tags -->
+<title>
+    CreaCréche - Presentation | Django  
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="title" content="Créche App - Django">
+<meta name="author" content="Create">
+<meta name="description" content="Application web pour la gestion de votre créche - Django - Create">
+<meta name="keywords" content="Créche App - Agence Create - Django - Application web" />
+<link rel="canonical" href="#">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="web App">
+<meta property="og:url" content="#">
+<meta property="og:title" content="Créche App - Create Agency">
+<meta property="og:description" content="CreaCréche pour la gestion compléte de votre créche">
+<meta property="og:image" content="#">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="CreaCréche - Django">
+<meta property="twitter:url" content="#">
+<meta property="twitter:title" content="CreaCréche - Django">
+<meta property="twitter:description" content="Application web pour la gestion de votre créche - Django - Create">
+<meta property="twitter:image" content="CreaCréche - Agence create - Django - Application web">
+
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="120x120" href="/static/assets/img/brand/CreaCrecheFavicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/assets/img/brand/CreaCrecheFavicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/assets/img/brand/CreaCrecheFavicon.png">
+<link rel="manifest" href="/static/assets/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/static/assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Fontawesome -->
+<link type="text/css" href="/static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+<!-- Notyf -->
+<link type="text/css" href="/static/assets/vendor/notyf/notyf.min.css" rel="stylesheet">
+
+<!-- Volt CSS -->
+<link type="text/css" href="/static/assets/css/volt.css" rel="stylesheet">
+
+<!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
+
+</head>
+
+<body>
+
+    <header class="header-global">
+
+    <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-tertiary pt-4 navbar-dark">
+            <div class="container position-relative">
+                <div class="navbar-collapse collapse mr-auto" id="navbar_global">
+                    <div class="navbar-collapse-header">
+                        <div class="row">
+                            <div class="col-6 collapse-brand">
+                                <a href="/">
+                                    <img src="/static/assets/img/brand/CreaCrecheFavicon.png" alt="Dental logo">
+                                </a>
+                            </div>
+                            <div class="col-6 collapse-close">
+                                <a href="#navbar_global" class="fas fa-times" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" title="close" aria-label="Toggle navigation"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                        <li class="nav-item mr-2">
+                            <a href="{% url 'list_enfant_absent'%}" class="nav-link text-muted text-white ">Pointage</a>
+                        </li>
+                        <li class="nav-item mr-2">
+                            <a href="{% url 'profile' %}" class="nav-link text-white ">Creche</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center ml-auto">
+                    <a href="https://www.createdz.com/" 
+                       target="_blank" class="btn btn-warning mr-md-3 text-white">
+                       <span class="fas fa-rocket mr-2"></span>
+                       Site web CREATE
+                       </a>
+                    <a href="{% url 'logout' %}" 
+                       class="text-white d-none d-lg-block">
+                       <span class="fas fa-sign-out-alt mr-2 text-danger"></span> Logout</a>
+                    <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <div class="preloader bg-soft flex-column justify-content-center align-items-center">
+            <img class="loader-element animate__animated animate__jackInTheBox" src="/static/assets/img/brand/CreaCrecheFavicon.png" height="300" alt="Dental logo">
+        </div>
+
+        <!-- Hero -->
+        <section class="section-header pb-9 pb-lg-12 bg-light
+         text-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <img class="navbar-brand-dark mb-4" src="/static/assets/img/brand/CreaCrecheLogo.png" height="300" alt="Logo light">
+                        <h1 class="display-1 text-warning">CreaCréche</h1>
+                        <div class="mb-5">
+                            <h2 class="h3 text-tertiary mr-3 ">Pour la gestion de votre créche</h2>
+                        </div>
+                        <!-- Button Modal -->
+                      
+                        <div class="d-flex justify-content-center align-items-end flex-wrap mb-6">
+                            <a href="{%url 'dashboard' %}" class="btn btn-warning  mr-4 mb-3 mb-lg-0 text-white"><span class="fas fa-chart-pie mr-2 d-none d-sm-inline"></span>Tableau de bord</a>
+                        </div>
+                      
+                       <!--  <div class="d-flex justify-content-center flex-column mb-6">
+                            <a href="https://themesberg.com" target="_blank">
+                                <img src="/static/assets/img/themesberg.svg" class="d-block mx-auto mb-3" height="25" width="25" alt="Themesberg Logo">
+                                <span class="text-muted font-small">
+                                &copy; Themesberg
+                                </span>
+                            </a>
+                            <a href="https://appseed.us?ref=demo">Coded in Django by AppSeed</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+         <figure class="position-absolute bottom-0 left-0 w-100 d-none d-md-block mb-n2"><svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4"><path d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path></svg></figure>        
+        </section>
+     
+        <section class="section section-sm pt-0 bg-white">
+            <div class="container">
+                <div class="row justify-content-center mb-5 mb-lg-6">
+                    <div class="col-12 text-center">
+                        <h2 class="h1 px-lg-5 text-muted">Plusieurs fonctionnalités de gestion de créche a votre disposition</h2>
+                        <p class="lead px-lg-10">        </p>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-6 mb-5">
+                        <a href="#" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/Login.PNG" alt="Dashboard page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center text-white">Login <i class="fas fa-external-link-alt ml-2"></i></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="#" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/dashborad.png" alt="Transactions page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center text-white">Tableau de bord <i class="fas fa-external-link-alt ml-2"></i></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 mb-5">
+                        <a href="#" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/Creche.PNG" alt="Settings page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center text-white">Créche <i class="fas fa-external-link-alt ml-2"></i></h6>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-6 mb-5">
+                        <a href="#" class="page-preview page-preview-lg scale-up-hover-2">
+                            <img class="shadow-lg rounded scale" src="/static/assets/img/pages/Pointage.PNG" alt="Sign In page preview">
+                            <div class="text-center show-on-hover">
+                                <h6 class="m-0 text-center text-white">Pointage <i class="fas fa-external-link-alt ml-2"></i></h6>
+                            </div>
+                        </a>
+                    </div>
+                  
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-chart-pie"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Tableau de bord</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-igloo"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Créche</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-child"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Enfant</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-user"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Parent</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="row justify-content-center">
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-users"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Employes</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-file-invoice-dollar"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Payement</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-utensils"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Cuisine</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-layer-group"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Classe</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                </div>
+                  <div class="row justify-content-center">
+                    <div class="col-6 col-md-3 text-center mb-4">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-hand-pointer"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Pointage</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                   
+                    <div class="col-6 col-md-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-white shadow-lg border-light rounded-circle icon-twitch mb-4">
+                            <span class="fas fa-cog"></span>
+                        </div>
+                        <h3 class="font-weight-bolder">Setting</h3>
+                        <p class="text-gray">-</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+
+    <footer class="footer py-6 bg-tertiary text-white">
+        <div class="container">
+
+            <hr class="bg-slack my-5">
+            <div class="row">
+                <div class="col mb-md-0">
+                    <a href="#" target="_blank" class="d-flex justify-content-center">
+                        <img src="/static/assets/img/brand/CreaCrecheFavicone.png" height="150" class="mb-3" alt="Dental Logo">
+                    </a>
+                <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
+                    <p class="font-weight-normal font-small mb-0">
+                        &copy; Create agency -<span class="current-year">2021</span> - <a target="_blank" href="https://www.createdz.com/">Create website</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% include 'includes/scripts.html' %}
+
+</body>
+</html>

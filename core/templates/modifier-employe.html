@@ -1,0 +1,103 @@
+
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Employee {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+   
+
+        <form action="{% url 'update_employee' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4">Informations employées </h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="raison_social">Nom</label>
+                                    <input name="nom" class="form-control" id="raison_social" type="text"placeholder="Nom" value="{{employe.nom}}"
+                                           >
+                                </div>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <div>
+                                    <label for="raison_social">Prenom</label>
+                                    <input name="prenom" class="form-control" id="raison_social" type="text"
+                                           placeholder="Prenom" value="{{employe.prenom}}"
+                                           >
+                                </div>
+                            </div>
+                          
+                        </div>
+
+                        <div class="row align-items-center">         
+                              <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="phone">Numero telephone</label>
+                                    <input name="telephone" class="form-control" id="phone" type="number"
+                                           placeholder="+213-345 678 910" value="{{employe.telephone}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="address">Address</label> 
+                                    <input name="address" class="form-control" id="address" type="text"
+                                           placeholder="" value="{{employe.address}}" >
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row align-items-center"> 
+                        <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="fonction">Fonction</label>
+                                    <input name="fonction" class="form-control" id="fonction" type="text"
+                                           placeholder="" value="{{employe.fonction}}" >
+                                </div>
+                            </div>
+                        <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="nif">Salary</label>
+                                    <input name="salaire" class="form-control" id="nif" type="number"
+                                           placeholder="" value="{{employe.salaire}}" >
+                                </div>
+                        </div>
+                         <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="email">email</label>
+                                    <input name="email" class="form-control" id="email" type="email"
+                                           placeholder="" value="{% if employe.email %}{{employe.email}}{% endif %}" >
+                                </div>
+                        </div>
+
+                        </div>
+                        <input type="hidden" name="id" value=" {{employe.id}}">
+                    
+                        <div class=" mb-3 mt-5">
+                            <button type="submit" class="btn btn-secondary">modifier</button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </form>
+         
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

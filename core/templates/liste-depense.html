@@ -1,0 +1,220 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Patient {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="{% url 'liste_depenses' %}"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="{% url 'liste_depenses' %}">depense</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Liste depense</li>
+                        </ol>
+                    </nav>
+                      <div class="d-block">
+                 <div class="h5 font-weight-normal mb-2 text-muted ">Liste de depense <span class="far fa-hand-holding-usd"> </div>
+                            <h2 class="h3 text-muted">{% now "jS F Y H:i" %}</h2>
+                          
+                        </div>
+                  
+
+                    <p class="mb-0">Indiquer la présence de l'employé en cliquant sur le button <span class="far fa-check-circle"></span> </p>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-8">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                    <div class="col-4   pl-md-0 text-right">
+                       <form action="{% url 'ajouter_facture_depense' %}" method="POST">
+                       {% csrf_token %}
+                        <button id="myButton"  type="submit" class="btn btn-secondary mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false">
+                          <span class="fas fa-plus mr-2"></span>New
+                        </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+           
+            {% comment %} <div class="table-settings mb-4">
+                  <div class="btn-group">
+                  {% for depense in liste_depenses %}
+                        <form action="{% url 'liste_depenses_employe' %}" method="POST">
+                            {% csrf_token %}
+                        <button  class="btn btn-sm btn btn-outline-success" type="submit">{{depense}}</button>
+                        </form>
+                         
+                    {% endfor %}     
+                </div>
+            </div> {% endcomment %}
+            <form action="{% url 'liste_depenses' %}" method="POST">
+            <div class="row  mb-4">
+                    <div class="col-4" >
+                             {% csrf_token %}
+                                            
+                                            <select class="form-select"  name = "depense" id="classe" aria-label="Default select example" >
+                                                <option value ="">tous les type de depense </option>
+                                                {% for depense in liste_depenses_rceherche %}
+                                                    {% if value == True and  depense.nom == prixsortie.raison_payement %}
+                                                       <option value="{{depense.nom}}" selected>{{depense.nom}}</option>
+                                                    {% else %}
+                                                       <option value="{{depense.nom}}">{{depense.nom}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                     {% if value == True and   prixsortie.raison_payement == "employe" %}
+                                                     <option value="employe" selected>employe</option>{% else %}
+                                                     <option value="employe">employe</option>
+                                                     {% endif %}
+                                                     
+                                            </select>                  
+                    </div> 
+                    <div class="col-4 ">
+                         <button  class="btn  btn-outline-success" type="submit"><span class="mr-1"><span class="fas fa-angle-double-right "></span></button>
+                    </div>
+                  
+            </div> 
+            </form>
+              {% if total_dep %}
+              <p class="mb-0 text-danger text-right">Total de depense : {{total_dep}}  DA <span class="far fa-check-circle"></span> </p>                      
+              {% endif %}
+        <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 30rem;">
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>date de depense</th>
+                            <th>type depense</th>
+                            <th>prix</th>
+                            <th>Action</th>
+                                    
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for depense in liste_depenses %}
+
+                        <tr>
+                            <td><span class="font-weight-bold text-info">{{depense.created_at|date:"D d M Y"}} </span> </td>
+                            <td> <span class="font-weight-bold text-info">{{depense.raison_payement}} </span></td>
+                            <td> <span class="font-weight-bold text-info">{{depense.prix_sortie}} </span></td>
+                            
+                            <td>
+                                {% if depense.raison_payement != 'employe'  %}
+                                <div class="btn-group">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        
+                                        <form  action="{% url 'supprimer_achats' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{depense.id}}">
+                                        <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt mr-2"></span>supprimer</button>
+                                        
+                                        </form>
+                                        {% if depense.article is None %}
+                                         <form  action="{% url 'modifier_depense_prix' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{depense.id}}">
+                                        <button class="dropdown-item " type="submit"><span class="fas fa-edit mr-2"></span>modifier</button>                                       
+                                        </form>
+                                         
+                                        {% else %}
+                                        <form  action="{% url 'modifier_achats' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{depense.id}}">
+                                        <button class="dropdown-item " type="submit"><span class="fas fa-edit mr-2"></span>modifier</button>                                       
+                                        </form>
+
+                                        {% endif %}
+                                        
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}                                              
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+
+<script type="text/javascript">
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[0];
+            let td1 = tr[i].getElementsByTagName('td')[1];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+                let textvalue2 = td1.textContent || td1.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 )
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+     document.getElementById("myButton2").onclick = function () {
+        location.href = "/ajouter-employee.html";
+    };
+
+  
+</script>
+
+{% endblock javascripts %}

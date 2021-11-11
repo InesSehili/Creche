@@ -1,0 +1,205 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Pointage {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+                
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Pointage</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Employées</li>
+                        </ol>
+                    </nav>
+                     <div class="d-block">
+                 <div class="h5 font-weight-normal mb-2 text-muted ">Pointage du jour <span class="far fa-calendar-alt"> </div>
+                            <h2 class="h3 text-muted">{% now "jS F Y H:i" %}</h2>
+                          
+                        </div>
+                  
+
+                    <p class="mb-0">Indiquer la présence de l'employé en cliquant sur le button <span class="far fa-check-circle"></span> </p>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Tous</button>
+                         </form>
+                         <form action="" method="POST">
+                            {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Archivés</button>
+                          </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-md-6 col-lg-3 col-xl-8">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun()">
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
+                       
+                        <button id="myButton"  type="submit" class="btn btn-info mr-2 dropdown-toggle" 
+                        aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-plus mr-2"></span>New
+                </button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-settings mb-4">
+                  <div class="btn-group">
+                 
+                       
+                        <form action="{% url 'list_employe_present' %}" method="POST">
+                            {% csrf_token %}
+                            
+
+
+                        <button  class="btn btn-sm btn btn-outline-success" type="submit">Present</button>
+                        </form>
+            <form action="{% url 'list_employe_absent'%}" method="POST">
+                            {% csrf_token %}
+                           
+
+                        <button class="btn btn-sm btn-outline-danger" type="submit">Absent</button>
+                        </form>
+
+                    
+                </div>
+            </div>
+            <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0"  style="height: 30rem;">
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            
+                            <th>Nom de l'employe</th>                       
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                        {% for i in list_employe %}
+
+                        <tr>
+      
+             <td> <span class="font-weight-bold text-info">{{i.nom}} {{i.prenom}}</span> </td>
+
+                              <td>
+                {% if etat == 'absent' %}
+                                 <form  action="{% url 'ajouter_pointage_employe'%}" method="POST">
+                                        {% csrf_token %}
+                                    
+                                    <input type="hidden" name="employe" value="{{i.id}}">
+                                   
+
+                             
+                                       <button class="btn btn-pill btn-outline-success" type="submit"> <span class="far fa-check-circle "> </span> Present</button>
+                                        </form>
+                               {% endif %}
+
+                            {% if etat == 'present'%}
+                              <form  action="{% url 'supprimer_pointage'%}" method="POST">
+                                        {% csrf_token %}
+                                    
+                                    <input type="hidden" name="employe" value="{{i.id}}">
+                                   
+
+                             
+     <button class="btn btn-pill btn-outline-danger" type="submit"> <span class="far fa-times-circle"> </span>Absent</button>
+                                        </form>
+                            {% endif %}
+                            </td>
+           
+
+                       
+                          
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+
+<script type="text/javascript">
+    const searchFun = () =>{
+        let filter = document.getElementById('myInput').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[0];
+
+            if(td){
+
+                let textvalue = td.textContent || td.innerHTML;
+
+                if(textvalue.toUpperCase().indexOf(filter) > -1)
+                {
+                       tr[i].style.display = "";
+                     
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+    document.getElementById("myButton").onclick = function () {
+        location.href = "/ajouter-patient.html";
+    };
+</script>
+
+{% endblock javascripts %}

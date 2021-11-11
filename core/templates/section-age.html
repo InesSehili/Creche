@@ -1,0 +1,163 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Autorisation {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class="content">
+
+        {% include 'includes/navigation.html' %}
+
+    
+
+    <form action="{% url 'section_age_page' %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 col-xl-8">
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"> 
+                            Ajouter un setion d'age
+                          
+                         <span class="fas fa-dice-four text-twitch "></span></h2>
+                     
+                        <div class="row ">
+                            
+                   <div class="col-md-4 mb-3">
+                              <div class="form-group">
+                                    <label for="desc_supplement">Section d'age 1</label>
+                                    <input  name="section_age1" class="form-control" id="desc_supplement" type="number"
+                                           placeholder="Age" value="{{section_age.section_age1|default:'Age' }}"  > 
+                                </div>
+                            </div>
+                             <div class="col-md-4 mb-3">
+                              <div class="form-group">
+                                    <label for="desc_supplement">Section d'age 2</label>
+                                    <input name="section_age2" class="form-control" id="desc_supplement" type="number"
+                                           placeholder="Age" value="{{section_age.section_age2|default:'Age' }}"  > 
+                                </div>
+                            </div>
+                           
+
+
+                        </div>
+                          <input type="hidden" name="id" value=" {{autorisation.id}}">
+                        
+                         
+                    
+                        <div class="mt-3">
+                            
+                            <button type="submit" class="btn btn-twitch">Sauvgarder</button>
+                    
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-12 col-xl-4">
+                    <div class="row">
+                      
+                        <div class="col-12">
+                         
+                                 <div class="card card-body bg-white text-center border-light shadow-sm mb-4 text-twitch ">
+
+                                 <span  class="fas fa-dice-four fa-10x"></span>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </form>
+      
+        <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                <div class="d-block mb-4 mb-md-0">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                          <li class="breadcrumb-item"><a href="#"><span class="fas fa-home"></span></a></li>
+                          <li class="breadcrumb-item"><a href="#">Configuration</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Liste des section d'age.</li>
+                        </ol>
+                    </nav>
+                    <h2 class="h4">Les Section d'age</h2>
+                    <p class="mb-0">Pour plus d'information cliquer sur la rubrique action.</p>
+                </div>
+               
+            </div>
+            <table class="table table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                          
+                            
+                            <th>Section d'age</th> 
+                       
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Item -->
+                             {% for section_age in list_section_age %}
+                        
+                        <tr>
+                      
+
+                           
+                            <td>
+                                <span class="font-weight-bold text-info">De {{section_age.section_age1}} à {{section_age.section_age2}} ans </span>
+                            </td>
+                             
+                           <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon icon-sm">
+                                            <span class="fas fa-ellipsis-h icon-dark"></span>
+                                        </span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                         <form action="{% url 'formulaire_modifier_section_age' %}" method="POST">
+                                           {% csrf_token %}
+                                           <input type="hidden" name="id" value="{{section_age.id}}">
+                                        <button class="dropdown-item" type="submit"><span class="fas fa-edit mr-2"></span>Modifier</button>
+                                    </form>
+                                    <form action="{% url 'delete_section_age' %}" method="POST">
+                                           {% csrf_token %}
+                                           <input type="hidden" name="id" value="{{section_age.id}}">
+                                        <button class="dropdown-item text-danger" type="submit"><span class="fas fa-trash-alt mr-2"></span>Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                            
+
+
+                          
+                        </tr>
+                        <!-- Item -->
+                         {% endfor %}
+                        
+
+                        
+                     
+                        
+                   
+                        
+                       
+   
+                                                  
+                    </tbody>
+                </table>
+               
+            </div>
+     
+
+        {% include 'includes/footer.html' %}
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

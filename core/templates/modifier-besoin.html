@@ -1,0 +1,121 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Besoin {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+      <div class="py-4">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                  <li class="breadcrumb-item"><a href="{% url 'liste_stock' %}"><span class="fas fa-home"></span></a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'liste_stock' %}">gestion de cuisine</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'liste_besoin' %}">besoin de cuisine</a></li>
+
+                  <li class="breadcrumb-item active" aria-current="page">modifier besoin</li>
+              </ol>
+          </nav>
+        
+      </div>
+       
+            <div class="row"> 
+                
+                {% comment %} <div class="col-12 col-xl-6">
+                <form action="{% url 'ajouter_article' %}" method="POST">
+                   {% csrf_token %}
+                    <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"> 
+                            Ajouter Des Articls 
+                         <span class="fas  fas fa-bus-alt text-twitch "></span></h2>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <div>
+                                    <label for="article">Article</label>
+                                    <input  class="form-control" id="article" type="text" name="article"
+                                           placeholder="Entrez le nom du article" value="">
+                                          
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div>
+                                    <label for="qt">qantite</label>
+                                    <input  class="form-control" id="qt" type="number"
+                                           placeholder="--" name="qantite" value="" >     
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-sm btn-outline-tertiary " >Sauvgarder</button>
+                        </div>
+                    </div>
+                 </form>
+                </div> {% endcomment %}
+                <div class="col-12 col-xl-12">
+                <form action="{% url 'valider_modifier_besoin' %}" method="POST">
+                   {% csrf_token %}
+                         <div class="card card-body bg-white border-light shadow-sm mb-4">
+                        <h2 class="h5 mb-4"> 
+                            modifier  Besoin 
+                         <span class="fas  fas fa-bus-alt text-twitch "></span></h2>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <div>
+                                    <label for="artcl">article</label>
+                                    <input  class="form-control" id="artcl" type="text" name="article" value ="{{besoin.article}}"
+                                           placeholder="{{besoin.article}}" >
+                                          
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div>
+                                    <label for="note">Note</label>
+                                    <input  class="form-control" id="note" type="text"
+                                           placeholder="{{besoin.note|default:''}} " name="note" value = "{{besoin.note|default:'' }}" 
+                                           >
+                                          
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                   <label for="birthday">Date de besoin</label>
+                                    <div class="input-group">
+                                         <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                        <input  class="form-control" id="birthday" type="date" name = "date"  placeholder="{{besoin.date}}" > 
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <input type="hidden" name="idbesoin" value={{besoin.id}}>
+                            <button type="submit" class="btn btn-sm btn-outline-tertiary ">Sauvgarder</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        
+  
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+<script type="text/javascript"> 
+  
+</script>
+
+
+{% endblock javascripts %}

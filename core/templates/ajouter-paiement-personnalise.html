@@ -1,0 +1,149 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ajouter payement {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+    
+        <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{% url 'liste_factures' %}"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'liste_factures' %}">Paiements</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">paiement Personnalise</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Paiements Personnalise </h1>
+                    <p class="mb-0">Ajouter Paiement Personnalise pour enfant.</p>
+                </div>   
+            </div>
+        </div>
+
+      <div class="card border-light shadow-sm mb-4">
+          <div class="card-body">
+              <form action="{% url 'ajouter_paiement_personnalise' %}" method="POST" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 ">
+                        <h2 class="h5 mb-4">Formulaire de nouveaux Paiements <span class="fas fa-comments-dollar"></span> :</h2>
+                        <div class="row">
+                          <div class="col-md-4 mb-3">
+                                <label for="enfant"> Selction enfant </label>
+                                <select name="enfant" class="form-select mb-0" id="enfant"
+                                        aria-label="Gender select example">
+                                    <option selected>List enfant</option>
+                                    {%for enfant in list_enfants%}
+                                    <option value="{{enfant.id}}">{{enfant.nom}} {{enfant.prenom}}</option>
+                                    {% endfor %}   
+                                </select>
+                            </div>
+                             <div class="col-md-4 mb-3">
+                                <div>
+                                   <label for="client">Client</label>
+                                    <input name="client" class="form-control" id="client" type="text"
+                                           placeholder=" ex : mere / pere " >
+                                </div>          
+                           </div>  
+                           <div class="col-md-4 mb-3">
+                               <label for="mois">mois</label>
+                                <select name="mois" class="form-select mb-0" id="mois"
+                                        aria-label="Gender select example">
+                                     <option value="janvier">janvier</option>  
+                                    <option value="février">février</option>  
+                                    <option value="mars">mars</option>    
+                                    <option value="avril">avril</option>  
+                                    <option value="mai"> mai</option>  
+                                    <option value="juin">juin</option>  
+                                    <option value="juillet">juillet</option>  
+                                    <option value="août">août</option>  
+                                    <option value="septembre">Septembre</option> 
+                                    <option value="octobre">Octobre</option>  
+                                    <option value="novembre">Novembre</option>  
+                                    <option value="décembre">Décembre</option>   
+                                </select>          
+                           </div>  
+                            
+                        </div>
+                        <div class="row">
+                           <div class="col-md-4 mb-3">
+                                <div>
+                                   <label for="tarif">Tarif </label>
+                                    <input name="tarif" class="form-control" id="tarif" type="number"
+                                           placeholder="prix" value=""
+                                           required>
+                                </div>          
+                           </div> 
+                           <div class="col-md-4 mb-3">
+                                <label for="suplement">Ajouter Suplementaires</label>
+                                <select name="ajouter-suplement" class="form-select mb-0" id="suplement"
+                                        aria-label="Gender select example">
+                                    <option value="Employés">.....</option>    
+                                </select>
+                            </div>
+                              <div class="col-md-4 mb-3">
+                                 <label for="categories">Categories Abonnement</label>
+                                <select name="categories_abonnement" class="form-select mb-0" id="categories"
+                                        aria-label="Gender select example">
+                                    <option value="Employés">....</option>    
+                                </select>
+
+                            </div>
+                                
+                        </div>    
+                        <div class="row"> 
+                             <div class="col-md-4 mb-3">
+                                <div>
+                                   <label for="nbr-somaine">Nombre de semaine</label>
+                                    <input name="nbr-somaine" class="form-control" id="nbr-somaine" type="number"
+                                           placeholder="--" value=""
+                                    >
+                                </div>          
+                           </div>  
+                             <div class="col-md-4 mb-3">
+                                <div>
+                                   <label for="jours">les jours à selectionné</label>
+                                     <select name="jours" class="form-select mb-0" id="jours"  aria-label="Gender select example">
+                                    <option value="Employés">dimanche </option>  
+                                    <option value="Employés">lundi </option>  
+                                    <option value="Employés">mardi </option>  
+                                    <option value="Employés"> mercredi </option>  
+                                    <option value="Employés"> jeudi</option>  
+                                    <option value="Employés">samedi</option>
+                                </select>  
+                                </div>          
+                           </div> 
+                        </div>  
+                            
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Sauvgarder</button>
+                                    <label for="matiere">Totale à payer :   </label>
+                                      
+                          </div>
+                        </div>
+                   
+                </div>
+              
+            </div>
+        </form>
+          </div>
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+{% endblock javascripts %}

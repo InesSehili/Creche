@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ajouter payement {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main class="content">
+
+      {% include 'includes/navigation.html' %}
+
+    
+        <div class="py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <li class="breadcrumb-item"><a href="{% url  'liste_factures' %}"><span class="fas fa-home"></span></a></li>
+                    <li class="breadcrumb-item"><a href="{% url  'liste_factures' %}">Paiements</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">paiement employee</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between w-100 flex-wrap">
+                <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Ajouter Paiement pour employe </h1>
+                
+                </div>
+            </div>
+        </div>
+
+      
+      </div>
+
+      {% include 'includes/footer.html' %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+{% endblock javascripts %}
