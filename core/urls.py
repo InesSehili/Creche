@@ -24,7 +24,7 @@ from enfants.views import liste_enfants , ajouter_enfant ,afficher_detail_enfant
 from stock.views import ajouter_article ,supprimer_stock  ,valider_modifier_stock ,modifier_stock
 from besoin.views import liste_besoin ,ajouter_besoin ,supprimer_besoin ,valider_modifier_besoin ,modifier_besoin
 from achats.views import  ajouter_achats   
-from pointages.views import imprimer_pointage_enfant, list_enfant_present ,list_enfant_absent ,pointage_enfant, supprimer_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_employe,supprimer_pointage,pointage_employe,  list_employe_present,list_employe_absent
+from pointages.views import imprimer_pointage_employe, imprimer_pointage_enfant, list_enfant_present ,list_enfant_absent ,pointage_enfant, supprimer_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_enfant, ajouter_pointage_employe,supprimer_pointage,pointage_employe,  list_employe_present,list_employe_absent
 from depenses.views import dashboard
 
 from prixsortie.views import liste_stock,liste_depenses ,ajouter_facture_depense,valider_ajouter_depense ,ajouter_liste_achats ,ajouter_achats_article ,supprimer_achats,modifier_achats ,valider_modifier_achats,ajouter_achats_besoin ,liste_achats ,valider_modifier_depense,modifier_depense_prix
@@ -42,6 +42,7 @@ urlpatterns = [
     path("", include("authentication.urls")),  # Auth routes - login / register
     path('changer_mot_de_passe', changer_mot_de_passe, name="changer_mot_de_passe"),
     path('imprimer_pointage_enfant', imprimer_pointage_enfant, name="imprimer_pointage_enfant"),
+    path('imprimer_pointage_employe', imprimer_pointage_employe, name="imprimer_pointage_employe"),
    
     path('imprimer_facture_employer', imprimer_facture_employer, name="imprimer_facture_employer"),
     path('ajouter_employee', ajouter_employee, name="ajouter_employee"),

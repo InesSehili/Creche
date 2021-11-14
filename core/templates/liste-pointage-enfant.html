@@ -36,14 +36,15 @@
                 </div>
               
             </div>
+            <h3 class="h3 text-muted">La dernière date ne compte pas</h2>
+                <p class="mb-0 text-success"> De preference le nombre de jours entre 2 dates ne doit pas depasser les 32. </p>
                <div class="col-12 col-xl-12 px-xl-0">
-
+                    
          <form action="{% url 'imprimer_pointage_enfant' %}" method="POST" >
             {% csrf_token %}
             <div class="row">
              
-                    
-                      
+                 
                        
            <div class="row align-items-center">
              <div class="col-md-2 mb-3">
@@ -62,22 +63,7 @@
                                           type="date" placeholder="dd/mm/yyyy" value="" required>
                                 </div>
                             </div>
-                            <div class="col-md-2 mb-3">
-                               
-             <div class="input-group">
-                 <select class="form-select" name="jour" id="jour" aria-label="Default select example">
-                                        <option value ="" selected>Jour de weekend</option>
-                                        
-                                        <option value="Sat">Samedi</option>
-                                        <option value="Sun">Dimanche</option>
-                                         <option value=Mon>Lundi</option>
-                                        <option value="Tue">Mardi</option>
-                                         <option value="Wed">Mercredi</option>
-                                        <option value="The">Jeudi</option>
-                                    </select>
-                 
-                                </div>
-                            </div>
+                          
                              <div class="col-md-2 mb-3">
                                 <input type="hidden" name="enfant" value="{{enfant.id}}">
 
