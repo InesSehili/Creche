@@ -169,8 +169,8 @@
         let tr = myTable.getElementsByTagName('tr');
 
         for(var i=0; i<tr.length; i++){
-            let td = tr[i].getElementsByTagName('td')[0];
-            let td1 = tr[i].getElementsByTagName('td')[1];
+            let td = tr[i].getElementsByTagName('td')[1];
+            let td1 = tr[i].getElementsByTagName('td')[2];
             if(td || td1){
                 let textvalue = td.textContent || td.innerHTML;
                 let textvalue2 = td1.textContent || td1.innerHTML;

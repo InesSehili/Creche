@@ -133,7 +133,7 @@ def  valider_ajouter_enfant(request):
                 enfant.save(force_insert=True)
                 facture_enfant = FactureEnfant(enfant=enfant,categorie=categorieAbonnement,client = client, frais_inscription=frais_inscription, prix_paye =prix_paye , reste_paye = rest_paye , prix_total = total_payement )
                 facture_enfant.save()
-                payement_enfant = Payement(enfant = enfant , facture = facture_enfant , prix_payer = prix_paye , client = client)
+                payement_enfant = Payement(enfant = enfant , facture = facture_enfant , prix_payer = prix_paye , client = client,  reste_facture_apres_ce_paiment = rest_paye )
                 payement_enfant.save()
                 if suplement : 
                     for i in range(len(suplement)):
