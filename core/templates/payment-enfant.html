@@ -147,6 +147,15 @@
                           {% endif %}</td>
                              
                              <td> <div class="btn-group">
+                                  <form action="{% url 'imprimer_facture' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="payement" value="{{payement.id}}">
+                                                <input type="hidden" name="facture" value="{{payement.facture.id}}">
+                                                  <input type="hidden" name="date" value="{{payement.created_at}}">
+                                                  <input type="hidden" name="enfant" value="{{payement.facture.enfant.id}}">
+                                                    <button class="btn btn-outline-gray text-muted " type="submit" ><span class="fas fa-print text-muted"></span>Imprimer</button>
+                                                    </form>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm">
                                             <span class="fas fa-ellipsis-h icon-dark"></span>
@@ -163,14 +172,7 @@
                                         <button class="dropdown-item text-primary" type="submit"><span class="fas fa-edit mr-2"></span>modifier</button>
                                         
                                         </form>
-                                         <form action="{% url 'imprimer_facture' %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <input type="hidden" name="payement" value="{{payement.id}}">
-                                                <input type="hidden" name="facture" value="{{payement.facture.id}}">
-                                                  <input type="hidden" name="date" value="{{payement.created_at}}">
-                                                  <input type="hidden" name="enfant" value="{{payement.facture.enfant.id}}">
-                                                    <button class="dropdown-item " type="submit" ><span class="fas fa-print text-muted"></span>Imprimer</button>
-                                                    </form>
+                                       
                                          <form  action="{% url 'supprimer_payement' %}" method="POST">
                                             {% csrf_token %}
                                                 <input type="hidden" name="id_payement" value="{{payement.id}}">

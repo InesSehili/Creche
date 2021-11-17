@@ -31,7 +31,7 @@
                         </div>
                   
 
-                    <p class="mb-0">Indiquer la présence de l'employé en cliquant sur le button <span class="far fa-check-circle"></span> </p>
+                    <p class="mb-0">Indiquer dans la barre de recherche le type de depense que vous vouler compter <span class="far fa-check-circle"></span> </p>
                 </div>
             </div>
             <div class="table-settings mb-4">
@@ -85,6 +85,11 @@
                                                      <option value="employe" selected>employe</option>{% else %}
                                                      <option value="employe">employe</option>
                                                      {% endif %}
+                                        <option value="educatrice"> educatrice</option> 
+                                        <option value="femmedemenage"> femme de ménage</option> 
+                                        <option value="chauffeur"> chauffeur</option>
+                                        <option value="cuisinie"> cuisinier</option>
+                                        <option value="assistante"> assistante</option> 
                                                      
                                             </select>                  
                     </div> 
@@ -94,6 +99,7 @@
                   
             </div> 
             </form>
+
               {% if total_dep %}
               <p class="mb-0 text-danger text-right">Total de depense : {{total_dep}}  DA <span class="far fa-check-circle"></span> </p>                      
               {% endif %}

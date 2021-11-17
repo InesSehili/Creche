@@ -40,8 +40,13 @@
                     <div class="col col-md-6 col-lg-3 col-xl-8">
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
-                            <input type="text" class="form-control" id="myInput" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2"
+                            <input type="text" class="form-control" id="myInput" placeholder="Recherche par nom" aria-label="Search" aria-describedby="basic-addon2"
                             name="" onkeyup="searchFun()">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
+                            <input type="text" class="form-control" id="myInput2" placeholder="Recherche par classe" aria-label="Search" aria-describedby="basic-addon2"
+                            name="" onkeyup="searchFun2()">
                         </div>
                     </div>
                     <div class="col-4 col-md-2 col-xl-1 pl-md-0 text-right">
@@ -69,6 +74,7 @@
                             <th> <span class="font-weight-bold">Nom</span></th>                       
                             <th> <span class="font-weight-bold">Prenom</span></th>
                             <th> <span class="font-weight-bold">Date naissance</span></th>
+                              <th> <span class="font-weight-bold">Classe</span></th>
                             <th> <span class="font-weight-bold">Prix total</span></th>
                             <th> <span class="font-weight-bold">Prix payé</span></th>
                             <th> <span class="font-weight-bold">Reste</span></th>
@@ -86,6 +92,7 @@
                             </td>
                             <td><span class="font-weight-bold text-info ">{{enfant.prenom}}</span></td>                        
                             <td><span class="font-weight-bold text-info " >{{enfant.date_naissance}}</span></td>
+                             <td><span class="font-weight-bold text-info " >{{enfant.classe.nom_classe}}</span></td>
                              <td><span class="font-weight-bold text-info " >{{enfant.total_payement}}</span></td>
                             <td><span class="font-weight-bold text-success " >{{enfant.prix_paye}}</span></td>
                             <td><span class="font-weight-bold text-danger" >{{enfant.reste_paye}}</span></td>
@@ -171,6 +178,34 @@
         for(var i=0; i<tr.length; i++){
             let td = tr[i].getElementsByTagName('td')[1];
             let td1 = tr[i].getElementsByTagName('td')[2];
+            if(td || td1){
+                let textvalue = td.textContent || td.innerHTML;
+                let textvalue2 = td1.textContent || td1.innerHTML;
+                if(textvalue.toUpperCase().indexOf(filter) > -1 || textvalue2.toUpperCase().indexOf(filter) > -1 )
+                {
+                       tr[i].style.display = "";
+
+                }else{
+
+                    tr[i].style.display = "none";
+                }
+
+            }
+           
+
+        }
+
+    }
+        const searchFun2 = () =>{
+        let filter = document.getElementById('myInput2').value.toUpperCase();
+
+        let myTable = document.getElementById('myTable');
+
+        let tr = myTable.getElementsByTagName('tr');
+
+        for(var i=0; i<tr.length; i++){
+            let td = tr[i].getElementsByTagName('td')[4];
+            let td1 = tr[i].getElementsByTagName('td')[5];
             if(td || td1){
                 let textvalue = td.textContent || td.innerHTML;
                 let textvalue2 = td1.textContent || td1.innerHTML;

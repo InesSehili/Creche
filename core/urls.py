@@ -16,7 +16,7 @@ from creches.views import ajouter_info_creche, changer_mot_de_passe
 from supplement.views import supplement_page, formulaire_modifier_supplement, update_supplement, delete_supplement
 from categoriesAbonnement.views import categorie_abonnement_page, formulaire_modifier_categorie_abonnement, update_categori_abonnement, delete_categorie_abonnement
 from depenses.views import depense_page, formulaire_modifier_depense, update_depense, delete_depense
-from classes.views import liste_classes , modifier_classe,update_classe ,supprimer_classes
+from classes.views import voir_revenu_par_classe, liste_classes , modifier_classe,update_classe ,supprimer_classes
 from autorisations.views import autorisation_page, formulaire_modifier_autorisation, update_autorisation, delete_autorisation 
 from enfants.views import liste_enfants , ajouter_enfant ,afficher_detail_enfant, valider_ajouter_enfant ,supprimer_enfant,modifier_enfant,valider_modifier_enfant
 
@@ -41,6 +41,7 @@ urlpatterns = [
     path("", include("app.urls")),  # UI Kits Html files
     path("", include("authentication.urls")),  # Auth routes - login / register
     path('changer_mot_de_passe', changer_mot_de_passe, name="changer_mot_de_passe"),
+    path('voir_revenu_par_classe', voir_revenu_par_classe, name="voir_revenu_par_classe"),
     path('imprimer_pointage_enfant', imprimer_pointage_enfant, name="imprimer_pointage_enfant"),
     path('imprimer_pointage_employe', imprimer_pointage_employe, name="imprimer_pointage_employe"),
    

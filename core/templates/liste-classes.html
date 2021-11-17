@@ -45,7 +45,7 @@
                                 <div>
                                     <label for="educatrice">Educatrice</label>
                         
-                                        <select name="employe" class="form-select mb-0" id="educatrice"
+                                        <select name="classe" class="form-select mb-0" id="educatrice"
                                             aria-label="Gender select example" required>
                                         <option value="" selected>selectionnez employee</option>
                                         {%for employee in list_employee%}
@@ -62,7 +62,7 @@
                             
                           <div class="col-md-12 mb-3">
                               <div class="form-group">
-                                    <label for="niveau">note </label>
+                                    <label for="niveau">Note </label>
                                     <textarea name="niveau" class="form-control" id="niveau" type="textarea"
                                            placeholder="note" value=""> </textarea>
                                 </div>
@@ -90,23 +90,86 @@
         </form>
       
         <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
-             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+            <h2 class="h5 mb-4"> 
+                            Compter le total des revenus pour chaque classe
+                          
+                         <span class="fas fa-comments-dollar text-twitch "></span></h2>
                 <div class="d-block mb-4 mb-md-0">
-                   
+                    <h3 class="h3 text-succes">{{revenu_entre}} DZD</h3>
+                    <form action="{% url 'voir_revenu_par_classe' %}" method="POST">
+            {% csrf_token %}
+              <div class="row">
+             
+                 
+                       
+           <div class="row align-items-center">
+             <div class="col-md-2 mb-3">
+           
+              <div class="input-group">
+                 <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+             <input name="date_debut"  class="form-control" id="birthday"
+                                           type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                 <div class="col-md-2 mb-3">
+                               
+             <div class="input-group">
+                  <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                  <input name="date_fin"  class="form-control" id="birthday"
+                                          type="date" placeholder="dd/mm/yyyy" value="" required>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <div class="input-group">
+                                      
+                 <select name="classe" class="form-select mb-0" id="educatrice"
+                                            aria-label="Gender select example" required>
+                                        <option value="" selected>Classes</option>
+                                        {% for classe  in liste_classes %}
+                                        <option value="{{classe.id}}"> {{classe.nom_classe}} </option>
+
+                                        {% endfor %}   
+                                       </select>    
+             
+                                </div>
+                            </div>
+                          
+                             <div class="col-md-2 mb-3">
+                               
+
+                                <button type="submit" class="btn btn-warning "> Revenue</button>
+          
+                            </div>
+                           
+                        </div>
+                 
+                       
+                   <div >
+              
+                        </div>
+                    
+                
+              
+            </div>
+           
+        
+             
+            </div>
+        </form>
                     <h2 class="h4">Liste des Classes</h2>
                     
                 </div>
                
-            </div>
+           
             <table class="table table-hover" id="myTable">
                     <thead>
                         <tr>
                             <th>date de creation</th> 
                             <th>Nom Classe</th> 
-                            <th>note</th>                      
-                            <th>éducatrice</th>
-                            <th>nbr-enfants</th>  
-                            <th>action</th>    
+                            <th>Niveau</th>                      
+                            <th>Educatrice</th>
+                            <th>Nombre des enfants</th>  
+                            <th>Action</th>    
                         </tr>
                     </thead>
                     <tbody>

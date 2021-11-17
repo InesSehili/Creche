@@ -164,14 +164,15 @@ def dashboard(request):
 		for enf in list_enfant:
 			reste_total_enfant = reste_total_enfant + enf.reste_paye
 
-
-	list_pointage_employe = Pointage.objects.filter(raison_pointage='employe').filter(date_pointage__year=date_debut.year, date_pointage__month=date_debut.month, date_pointage__day=date_debut.day )
+	date_debut_a = datetime.today()
+	date_jdida = date_debut_a.date()
+	list_pointage_employe = Pointage.objects.filter(raison_pointage='employe').filter(date_pointage = date_jdida )
 	list_employe_tout = Employes.objects.all().order_by('updated_at')
 	for p in list_pointage_employe:
 		list_id_employe.append(p.employe.id)
 
 	context['nbr_absent_employe'] = Employes.objects.exclude(id__in=list_id_employe).count()
-	list_pointage_enfant = Pointage.objects.filter(raison_pointage='enfant').filter(date_pointage__year=date_debut.year, date_pointage__month=date_debut.month, date_pointage__day=date_debut.day )
+	list_pointage_enfant = Pointage.objects.filter(raison_pointage='enfant').filter(date_pointage = date_jdida )
 	for p in list_pointage_enfant:
 		list_id_enfant.append(p.enfant.id)
 

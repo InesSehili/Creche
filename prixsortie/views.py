@@ -6,6 +6,8 @@ import decimal
 from stock.models import Stock
 from besoin.models import Besoin
 from django.contrib.auth.decorators import login_required
+from employes.models import Employes
+from factures.models import Facture
 # Create your views here.
 @login_required(login_url="/login/")
 def liste_depenses(request) :
@@ -13,6 +15,8 @@ def liste_depenses(request) :
     context['segment'] = 'depense'
     prixsortie = Prixsortie.objects.all().values() 
     context['liste_depenses'] = prixsortie
+    list_facture = []
+    total_dep = 0
     
     liste_depenses_filter = Depense.objects.all().values()
     context['liste_depenses_rceherche'] =  liste_depenses_filter      
@@ -21,13 +25,25 @@ def liste_depenses(request) :
         
         if type_depense == '' :
             prixsortie = Prixsortie.objects.all().values()
-        else :
-            prixsortie = Prixsortie.objects.filter(raison_payement=type_depense)
-            total_dep = 0
-            for list in prixsortie :
-                total_dep = total_dep + list.prix_sortie
-            context['total_dep'] = total_dep
-            context ['value'] =True    
+        else:
+            if type_depense == 'educatrice' or type_depense == 'femmedemenage' or type_depense == 'chauffeur' or type_depense == 'cuisinie' or type_depense == 'assistante':
+                print("inesss")
+                List_employe = Employes.objects.filter(fonction = type_depense)
+                for emp in List_employe:
+                    facture_emp = Facture.objects.filter(employe = emp)
+                    for f_emp in facture_emp :
+                        total_dep = total_dep+ f_emp.tarif
+
+            else :
+                prixsortie = Prixsortie.objects.filter(raison_payement=type_depense)
+                
+                for list in prixsortie :
+                    total_dep = total_dep + list.prix_sortie
+        context['total_dep'] = total_dep
+        print('total_dep', context['total_dep'])
+        context ['value'] =True  
+
+          
         
         
         context['liste_depenses'] = prixsortie

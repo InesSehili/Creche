@@ -61,8 +61,16 @@
                         <div class="col-md-4 mb-3">
                                 <div class="form-group">
                                     <label for="fonction">Fonction</label>
-                                    <input name="fonction" class="form-control" id="fonction" type="text"
-                                           placeholder="" value="{{employe.fonction}}" >
+                                     <select class="form-select"  name = "fonction" id="classe" aria-label="Default select example" >
+                                         <option value="{{employe.fonction}}">{{employe.fonction}}</option>       
+                                        <option value="educatrice"> educatrice</option> 
+                                        <option value="femmedemenage"> femme de ménage</option> 
+                                        <option value="chauffeur"> chauffeur</option>
+                                        <option value="cuisinie"> cuisinier</option>
+                                        <option value="assistante"> assistante</option> 
+                                                     
+                                            </select>   
+                                 
                                 </div>
                             </div>
                         <div class="col-md-4 mb-3">

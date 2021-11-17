@@ -177,9 +177,10 @@ def valider_modifier_payement(request):
 					Payement.objects.filter(id =decimal.Decimal(id_payement) ).update(prix_payer = prix_payer)
 					Payement.objects.filter(id =decimal.Decimal(id_payement) ).update(client = client)
 
-					FactureEnfant.objects.filter(id=decimal.Decimal(facture)).update(prix_paye= prix_payer_facture + decimal.Decimal(prix_payer) - prix_payer_payement )
+					FactureEnfant.objects.filter(id=decimal.Decimal(facture)).update(prix_paye= prix_payer_facture + decimal.Decimal(prix_payer)- prix_payer_payement )
 					dernier_prix_paye = FactureEnfant.objects.get(id=decimal.Decimal(facture)).prix_paye
 					FactureEnfant.objects.filter(id=decimal.Decimal(facture)).update(reste_paye= prix_defini_facture-dernier_prix_paye)
+					Payement.objects.filter(id =decimal.Decimal(id_payement)).update(reste_facture_apres_ce_paiment = prix_defini_facture-dernier_prix_paye)
 					
 					prix_paye_patient = Enfant.objects.get(id=id_enfant).prix_paye
 					Enfant.objects.filter(id=id_enfant).update(prix_paye=prix_paye_patient+ decimal.Decimal(prix_payer) - prix_payer_payement )
