@@ -1,5 +1,6 @@
-{% extends "layouts/base.html" %}
 
+{% extends "layouts/base.html" %}
+{% load auth_extras %}
 {% block title %} Patient {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
@@ -10,6 +11,7 @@
 {% endblock stylesheets %}
 
 {% block content %}
+
                 
     <main class="content">
 
@@ -82,14 +84,18 @@
                                                     {% endif %}
                                                 {% endfor %}
                                                      {% if value == True and   prixsortie.raison_payement == "employe" %}
+                                                     {% if request.user|has_group:"admincreche" %}
                                                      <option value="employe" selected>employe</option>{% else %}
                                                      <option value="employe">employe</option>
                                                      {% endif %}
+                                                     {% endif %}
+                                                     {% if request.user|has_group:"admincreche" %}
                                         <option value="educatrice"> educatrice</option> 
                                         <option value="femmedemenage"> femme de ménage</option> 
                                         <option value="chauffeur"> chauffeur</option>
                                         <option value="cuisinie"> cuisinier</option>
                                         <option value="assistante"> assistante</option> 
+                                        {% endif %}
                                                      
                                             </select>                  
                     </div> 

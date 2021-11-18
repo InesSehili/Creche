@@ -1,4 +1,4 @@
-
+{% load auth_extras %}
     <nav id="sidebarMenu" class="sidebar d-md-block bg-tertiary text-dark collapse px-4">
         <div class="sidebar-sticky pt-3 mx-auto">
             <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
@@ -42,14 +42,14 @@
                 <span>Enfants</span>
                 </a>
             </li>
-
+            {% if request.user|has_group:"admincreche" %}
              <li class="nav-item  {% if 'employe' in segment %} active {% endif %}">
                 <a href="{% url 'liste_employe' %}" class="nav-link">
                 <span class="sidebar-icon"><span class="fas fa-users"></span></span>
                 <span>Employes</span>
                 </a>
             </li>
-            
+            {% endif %}
             
             <li class="nav-item  {% if 'stock' in segment %} active {% endif %}">
                 <a href="{% url 'liste_stock' %}" class="nav-link">
@@ -67,8 +67,9 @@
                 </span>
                 <div class="multi-level collapse " role="list" id="submenu-components-payement" aria-expanded="false">
                     <ul class="flex-column nav">
-                        
+                         {% if request.user|has_group:"admincreche" %}
                         <li class="nav-item {% if 'gttgr' in segment %} active {% endif %}"><a class="nav-link" href="{% url 'paiement_employe' %}"><span>Employes</span></a></li>
+                        {% endif %}
                            <li class="nav-item {% if 'gtrr' in segment %} active {% endif %}"><a class="nav-link" href="{% url 'liste_factures_touts_les_enfant' %}"><span>Enfants</span></a></li>
                     </ul>
                 </div>

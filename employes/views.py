@@ -12,8 +12,10 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from creches.models import Creche
 import datetime
 from factures.models import Facture
+from core.decorators import allowed_users
 
 # Create your views here.
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def ajouter_employee(request):
     context = {}
@@ -32,14 +34,14 @@ def ajouter_employee(request):
     context['list_employee'] = Employes.objects.all().values()
     return render(request, 'ajouter-employee.html', context)
 
-
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def liste_employe(request):
     context = {}
     context['segment'] = 'employe'
     context['list_employee'] = Employes.objects.all().values().order_by('updated_at')
     return render(request, 'employes.html', context)
-
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def supprimer_employe(request):
     context = {}
@@ -52,6 +54,7 @@ def supprimer_employe(request):
     
     
     return redirect('liste_employe')
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def modifier_employe(request):
     context = {}
@@ -62,7 +65,7 @@ def modifier_employe(request):
     
     context ['employe'] = employe
     return render(request, 'modifier-employe.html', context)
-
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def update_employee(request):
     context = {}
@@ -87,7 +90,7 @@ def update_employee(request):
     
     
     return redirect('liste_employe')
-
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def employe_list_pointage(request):
     context = {}
@@ -97,7 +100,8 @@ def employe_list_pointage(request):
     p = Employes.objects.get(id = id_employe)
     pointage = Pointage.objects.filter(employe=p)
     return render(request, 'employes.html', context)
-
+    
+@allowed_users(allowed_roles=['admincreche'])
 @login_required(login_url="/login/")
 def imprimer_facture_employer(request):
 
